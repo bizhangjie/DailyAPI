@@ -19,6 +19,7 @@
   "dependencies": {
     "axios": "^1.6.3",
     "cheerio": "1.0.0-rc.12",
+    "crypto-js": "^4.2.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.19.2",
