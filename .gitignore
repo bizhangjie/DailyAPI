@@ -1,0 +1,12 @@
+# 忽略日志文件
+*.log
+
+# 忽略临时文件夹
+routes/video
+routes/search
+
+# 忽略测试文件夹
+testDemo/
+
+# 忽略特定文件
+secret.txt
