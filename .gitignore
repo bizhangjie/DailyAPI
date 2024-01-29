@@ -4,10 +4,6 @@
 # 忽略包
 node_modules/
 
-# 忽略临时文件夹
-routes/video
-routes/search
-
 # 忽略测试文件夹
 testDemo/
 
