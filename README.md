@@ -60,8 +60,8 @@ bash <(wget -qO- https://raw.githubusercontent.com/bizhangjie/DailyAPI/main/shel
 
 ```bash
 # 安装依赖
-pnpm install
+npm install
 
 # 运行
-pnpm start
+npm start
 ```
