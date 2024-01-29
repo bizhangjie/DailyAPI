@@ -56,3 +56,12 @@ bash <(wget -qO- https://raw.githubusercontent.com/bizhangjie/DailyAPI/main/shel
 bash <(wget -qO- https://raw.githubusercontent.com/bizhangjie/DailyAPI/main/shell/hotapi_yijian.sh)
 ```
 
+## 部署
+
+```bash
+# 安装依赖
+pnpm install
+
+# 运行
+pnpm start
+```
