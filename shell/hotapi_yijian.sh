@@ -16,7 +16,8 @@ if ! command -v node &> /dev/null; then
   if [[ $version == "20.04" ]]; then
     echo "这是 Ubuntu 20.04 版本"
     # 执行 Ubuntu 20.04 版本的操作
-    # 在这里添加您要执行的命令或操作
+    # 从 NodeSource 服务下载需要的 Node.js 安装脚本。注意更换版本号。当前的 LTS 版本是 18.x
+    curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
   elif [[ $version == "11" ]]; then
     echo "这是 Debian GNU/Linux 11 版本"
     # 从 NodeSource 服务下载需要的 Node.js 安装脚本。注意更换版本号。当前的 LTS 版本是 18.x

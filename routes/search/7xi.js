@@ -227,52 +227,52 @@ xi7Router.get("/7xi/:wd/:page", async (ctx) => {
 // });
 
 // 7喜影视 - 获取最新数据
-xi7Router.get("/7xi/new", async (ctx) => {
-  console.log("获取7喜影视 - 最新数据");
-  try {
-    // 从服务器拉取最新数据
-    const response = await axios.get(cgHost);
-    const newData = getData(response.data);
-    updateTime = new Date().toISOString();
-    console.log("从服务端重新获取7喜影视");
-
-    // 返回最新数据
-    ctx.body = {
-      code: 200,
-      message: "获取成功",
-      ...routerInfo,
-      total: newData.length,
-      updateTime,
-      data: newData,
-    };
-
-    // 删除旧数据
-    await del(cacheKey);
-    // 将最新数据写入缓存
-    await set(cacheKey, newData);
-  } catch (error) {
-    // 如果拉取最新数据失败，尝试从缓存中获取数据
-    console.error(error);
-    const cachedData = await get(cacheKey);
-    if (cachedData) {
-      ctx.body = {
-        code: 200,
-        message: "获取成功",
-        ...routerInfo,
-        total: cachedData.length,
-        updateTime,
-        data: cachedData,
-      };
-    } else {
-      // 如果缓存中也没有数据，则返回错误信息
-      ctx.body = {
-        code: 500,
-        ...routerInfo,
-        message: "获取失败",
-      };
-    }
-  }
-});
+// xi7Router.get("/7xi/new", async (ctx) => {
+//   console.log("获取7喜影视 - 最新数据");
+//   try {
+//     // 从服务器拉取最新数据
+//     const response = await axios.get(cgHost);
+//     const newData = getData(response.data);
+//     updateTime = new Date().toISOString();
+//     console.log("从服务端重新获取7喜影视");
+//
+//     // 返回最新数据
+//     ctx.body = {
+//       code: 200,
+//       message: "获取成功",
+//       ...routerInfo,
+//       total: newData.length,
+//       updateTime,
+//       data: newData,
+//     };
+//
+//     // 删除旧数据
+//     await del(cacheKey);
+//     // 将最新数据写入缓存
+//     await set(cacheKey, newData);
+//   } catch (error) {
+//     // 如果拉取最新数据失败，尝试从缓存中获取数据
+//     console.error(error);
+//     const cachedData = await get(cacheKey);
+//     if (cachedData) {
+//       ctx.body = {
+//         code: 200,
+//         message: "获取成功",
+//         ...routerInfo,
+//         total: cachedData.length,
+//         updateTime,
+//         data: cachedData,
+//       };
+//     } else {
+//       // 如果缓存中也没有数据，则返回错误信息
+//       ctx.body = {
+//         code: 500,
+//         ...routerInfo,
+//         message: "获取失败",
+//       };
+//     }
+//   }
+// });
 
 
 xi7Router.info = routerInfo;
