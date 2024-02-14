@@ -11,7 +11,7 @@ const routerInfo = {
 };
 
 // 缓存键名
-const cacheKey = "xi7Data";
+const cacheKey = "qtingsData";
 
 // 调用时间
 let updateTime = new Date().toISOString();
@@ -60,7 +60,7 @@ qtingsRouter.get("/qtings/:wd", async (ctx) => {
   console.log(`获取倾听 ${url}`);
   try {
     // 从缓存中获取数据
-    let data = await get(cacheKey);
+    let data = await get(cacheKey + wd);
     const from = data ? "cache" : "server";
     if (!data) {
       // 如果缓存中不存在数据
@@ -78,7 +78,7 @@ qtingsRouter.get("/qtings/:wd", async (ctx) => {
         return false;
       }
       // 将数据写入缓存
-      await set(cacheKey, data);
+      await set(cacheKey + wd, data);
     }
     ctx.body = {
       code: 200,
