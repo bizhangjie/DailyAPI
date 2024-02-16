@@ -107,6 +107,11 @@ const checkPort = (port) => {
     });
 };
 
+// 设置404页面的路由处理程序
+app.use(async (ctx) => {
+  await ctx.render("404"); // 渲染404页面
+});
+
 // 尝试启动应用程序
 const tryStartApp = async (port) => {
     let isPortAvailable = await checkPort(port);
@@ -116,5 +121,7 @@ const tryStartApp = async (port) => {
     }
     startApp(port);
 };
+
+
 
 tryStartApp(port);
