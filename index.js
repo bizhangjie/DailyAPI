@@ -55,24 +55,25 @@ app.use(async (ctx, next) => {
 
 const fs = require("fs");
 
-// 访问统计函数
-const accessStatistics = async (ctx, next) => {
-    const ip = ctx.request.ip; // 获取访问者的 IP 地址
-    const userAgent = ctx.headers["user-agent"]; // 获取访问者的浏览器信息
-    const url = ctx.request.url; // 获取访问的 URL
-    // 执行下一个中间件或路由处理程序，并捕获响应结果
-    await next();
-
-    // 获取响应的状态码
-    const statusCode = ctx.response.status;
-
-    // 记录访问日志
-    const log = `IP: ${ip}, User Agent: ${userAgent}, URL: ${url}, Status Code: ${statusCode}\n`;
-    fs.appendFileSync("access.log", log, "utf8");
-};
-
-// 使用访问统计中间件
-app.use(accessStatistics);
+// vercel是只读，无法使用
+// // 访问统计函数
+// const accessStatistics = async (ctx, next) => {
+//     const ip = ctx.request.ip; // 获取访问者的 IP 地址
+//     const userAgent = ctx.headers["user-agent"]; // 获取访问者的浏览器信息
+//     const url = ctx.request.url; // 获取访问的 URL
+//     // 执行下一个中间件或路由处理程序，并捕获响应结果
+//     await next();
+//
+//     // 获取响应的状态码
+//     const statusCode = ctx.response.status;
+//
+//     // 记录访问日志
+//     const log = `IP: ${ip}, User Agent: ${userAgent}, URL: ${url}, Status Code: ${statusCode}\n`;
+//     fs.appendFileSync("access.log", log, "utf8");
+// };
+//
+// // 使用访问统计中间件
+// app.use(accessStatistics);
 
 // 使用路由中间件
 app.use(router.routes());
