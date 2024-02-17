@@ -60,6 +60,11 @@ registerRoutes(__dirname + "/bit", router, allRouterInfo);
 // 遍历comics文件夹下的所有路由模块
 registerRoutes(__dirname + "/comics", router, allRouterInfo);
 
+// 遍历pic文件夹下的所有路由模块
+registerRoutes(__dirname + "/pic", router, allRouterInfo);
+
+// 遍历vip文件夹下的所有路由模块
+registerRoutes(__dirname + "/vip", router, allRouterInfo);
 
 // 全部接口路由
 router.get("/all", async (ctx) => {
