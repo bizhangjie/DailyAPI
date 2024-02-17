@@ -57,6 +57,9 @@ registerRoutes(__dirname + "/music", router, allRouterInfo);
 // 遍历bit文件夹下的所有路由模块
 registerRoutes(__dirname + "/bit", router, allRouterInfo);
 
+// 遍历comics文件夹下的所有路由模块
+registerRoutes(__dirname + "/comics", router, allRouterInfo);
+
 
 // 全部接口路由
 router.get("/all", async (ctx) => {
