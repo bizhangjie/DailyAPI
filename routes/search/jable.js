@@ -78,7 +78,7 @@ jabletvRouter.get("/jabletv/:uid", async (ctx) => {
             const pythonScriptPath = '/opt/DailyAPI/py/jable.py';
 
             // 要传递给Python脚本的参数
-            const pythonScriptArgs = [uid];
+            const pythonScriptArgs = [lowerCaseUid];
 
             // 创建Python子进程
             const pythonProcess = spawn('python', [pythonScriptPath, ...pythonScriptArgs]);

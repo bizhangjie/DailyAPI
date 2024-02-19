@@ -17,7 +17,8 @@ args = sys.argv[1:]  # 跳过第一个参数（脚本路径），获取剩余的
 
 
 scraper = cloudscraper.create_scraper()
-url = 'https://en.jable.tv/videos/' + args[0] + '/'
+# url = 'https://jable.tv/videos/' + args[0] + '/'
+url = 'https://jable.tv/videos/' + 'midv-612' + '/'
 # print(url)
 resp = scraper.get(url).text
 # title = re.findall("<title>(.*?)<", resp)[0]
