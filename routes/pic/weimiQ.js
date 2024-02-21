@@ -165,7 +165,7 @@ weimiQRouter.get("/weimiQ/", async (ctx) => {
     });
     const ImageByte = 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))
     ctx.type = 'image/png';
-    ctx.body = Buffer.from(ImageByte.split(',')[1], 'base64'); ;
+    ctx.body = Buffer.from(ImageByte.split(',')[1], 'base64');
 
 })
 

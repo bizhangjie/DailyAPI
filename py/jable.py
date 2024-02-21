@@ -17,11 +17,8 @@ args = sys.argv[1:]  # 跳过第一个参数（脚本路径），获取剩余的
 
 
 scraper = cloudscraper.create_scraper()
-# url = 'https://jable.tv/videos/' + args[0] + '/'
-url = 'https://jable.tv/videos/' + 'midv-612' + '/'
-# print(url)
-resp = scraper.get(url).text
-# title = re.findall("<title>(.*?)<", resp)[0]
+url = 'https://jable.tv/videos/' + args[0] + '/'
+resp = scraper.get(url)
 m3u8 = re.findall("hlsUrl = '(.*?)'", resp)[0]
-# data = { 'title': title, 'm3u8': m3u8}
+
 print(m3u8)
