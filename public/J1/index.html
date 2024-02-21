@@ -34,6 +34,13 @@
             position: relative;
         }
 
+        @media (max-width: 600px) {
+            /* 在屏幕宽度小于或等于 600px 时的样式调整 */
+            .videoCard {
+                width: 48%; /* 每行显示 2 个，每个占据 48% 的宽度，减去 margin 的宽度 */
+            }
+        }
+
         .videoCard:hover {
             transform: scale(1.05);
         }
@@ -309,7 +316,7 @@
 <!-- 在 body 元素末尾添加悬浮的 div -->
 <div id="floatingButtonsContainer">
     <button onclick="scrollToTopSmooth()">Top</button>
-    <button onclick="onNextPage()">Next</button>
+<!--    <button onclick="onNextPage()">Next</button>-->
 </div>
 
 <!-- 新的悬浮播放器容器 -->
@@ -509,26 +516,26 @@
     };
 
     // 保存播放历史记录
-const saveHistory = (title, url, timestamp) => {
-    const history = getHistory();
+    const saveHistory = (title, url, timestamp) => {
+        const history = getHistory();
 
-    // 查找是否存在相同的 url
-    const existingIndex = history.findIndex(item => item.url === url);
+        // 查找是否存在相同的 url
+        const existingIndex = history.findIndex(item => item.url === url);
 
-    if (existingIndex !== -1) {
-        // 更新时间戳和播放次数
-        const playCount = (history[existingIndex]?.playCount || 0) + 1;
-        // 先保存，再删除旧历史记录
-        history.splice(existingIndex, 1);
-        history.unshift({title, url, timestamp, playCount})
-    } else {
-        // 如果不存在相同的 title，添加新的历史记录到最前面
-        history.unshift({ title, url, timestamp, playCount: 1 });
-    }
+        if (existingIndex !== -1) {
+            // 更新时间戳和播放次数
+            const playCount = (history[existingIndex]?.playCount || 0) + 1;
+            // 先保存，再删除旧历史记录
+            history.splice(existingIndex, 1);
+            history.unshift({title, url, timestamp, playCount})
+        } else {
+            // 如果不存在相同的 title，添加新的历史记录到最前面
+            history.unshift({title, url, timestamp, playCount: 1});
+        }
 
-    console.log("保存数据 => " + title + " url => " + url + "  time => " + timestamp + " 播放次数 => " + history[existingIndex]?.playCount);
-    localStorage.setItem('playHistory', JSON.stringify(history));
-};
+        console.log("保存数据 => " + title + " url => " + url + "  time => " + timestamp + " 播放次数 => " + history[existingIndex]?.playCount);
+        localStorage.setItem('playHistory', JSON.stringify(history));
+    };
 
 
     // 显示播放历史

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Video List</title>
     <style>
         body {
@@ -24,13 +24,20 @@
         }
 
         .videoCard {
-            width: 25%; /* 每行显示 4 个，每个占据 25% 的宽度 */
+            width: 25%; /* 每行显示 4 个，每个占据 25% 的宽度，减去 margin 的宽度 */
             margin-bottom: 20px;
             box-sizing: border-box;
             background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s ease-in-out;
             position: relative;
+        }
+
+        @media (max-width: 600px) {
+            /* 在屏幕宽度小于或等于 600px 时的样式调整 */
+            .videoCard {
+                width: 48%; /* 每行显示 2 个，每个占据 48% 的宽度，减去 margin 的宽度 */
+            }
         }
 
         .videoCard:hover {
