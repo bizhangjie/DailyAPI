@@ -230,44 +230,6 @@
             pointer-events: none; /* 使虚化的区域不响应鼠标事件 */
         }
     </style>
-
-    <style>
-        #fullscreenOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-
-        #fullscreenContent {
-            max-width: 80%;
-            max-height: 80%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        #fullscreenContent img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        #fullscreenContent span {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            color: #fff;
-            cursor: pointer;
-            font-size: 18px;
-        }
-    </style>
-
     <!-- DPlayer -->
     <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
     <!-- hls.js -->
@@ -354,7 +316,7 @@
 <!-- 在 body 元素末尾添加悬浮的 div -->
 <div id="floatingButtonsContainer">
     <button onclick="scrollToTopSmooth()">Top</button>
-    <!--    <button onclick="onNextPage()">Next</button>-->
+<!--    <button onclick="onNextPage()">Next</button>-->
 </div>
 
 <!-- 新的悬浮播放器容器 -->
@@ -403,9 +365,7 @@
             card.classList.add('videoCard');
             card.innerHTML = `
             <div class="cardContent">
-                <div class="thumbnailContainer">
-                    <img src="${video.img}" alt="${video.title}" onclick="openFullScreenPreview('${video.img}','${video.title}')">
-                </div>
+                <img src="${video.img}" alt="${video.title}">
                 <h3>${video.title}</h3>
                 <p>${video.desc}</p>
                 <p>${video.time}</p>
@@ -421,25 +381,6 @@
             document.getElementById('loadMoreButton').style.display = 'block';
         }, 500);
     };
-
-    function openFullScreenPreview(imageUrl, title) {
-        const overlay = document.createElement('div');
-        overlay.id = 'fullscreenOverlay';
-        overlay.innerHTML = `
-        <div id="fullscreenContent">
-            <img src="${imageUrl}" alt="${title}">
-            <span onclick="closeFullScreenPreview()">Close</span>
-        </div>
-    `;
-        document.body.appendChild(overlay);
-    }
-
-    function closeFullScreenPreview() {
-        const overlay = document.getElementById('fullscreenOverlay');
-        if (overlay) {
-            overlay.remove();
-        }
-    }
 
     const clearDataContainer = () => {
         videoListContainer.innerHTML = '';
