@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <link rel="stylesheet" href="https://jsd.onmicrosoft.cn/npm/mdui@1.0.2/dist/css/mdui.min.css">
+
+    <script>
+        // 百度统计代码
+        var _hmt = _hmt || [];
+        const localNetworkRegex =
+            /^(?:127\.0\.0\.1|localhost|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3})$/;
+        // 如果不是本地网络访问，则加载百度统计代码
+        if (!localNetworkRegex.test(window.location.hostname)) {
+            (function () {
+                let hm = document.createElement("script");
+                // 打散字符防广告爬虫
+                const analytics_bd = 'bc11f5039f19a2b8c9087c2da83637ea';
+                hm.src = ['ht', 't', 'ps', ':/', '/h', 'm', '.', 'ba', 'i', 'd', 'u.c', 'o', 'm/', 'h', 'm', '.j', 's?', analytics_bd].join('');
+                let s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        } else {
+            console.log('本地网络访问，不加载百度统计代码');
+        }
+    </script>
+    <style>
+        .live-room-notice {
+            position: relative;
+            overflow: auto;
+            max-height: 300px;
+            border: 1px dashed gray;
+            border-radius: 5px;
+            padding: 3px;
+            margin-top: 5px;
+        }
+
+        /* 应用栏背景样式，使用 !important 以提高特定性 */
+        .mdui-appbar-fixed {
+            background: linear-gradient(45deg, #FF5F6D, #FFC371) !important;
+        }
+
+    </style>
+    <title>Pure Stream - Junlong+</title>
+</head>
+
+<body class="mdui-theme-layout-auto mdui-theme-primary-teal mdui-theme-accent-deep-orange mdui-appbar-with-toolbar">
+
+<!-- 应用栏 -->
+<div class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar">
+        <a href="javascript:void(0)" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer', swipe: true}">
+            <i class="mdui-icon material-icons">menu</i>
+        </a>
+        <a href="#" class="mdui-typo-headline">🤖</a>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="#" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'Z🤖'}">
+            <i class="mdui-icon material-icons">person</i>
+        </a>
+        <a href="https://www.buxiangyao.link" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '+++++++'}">
+            <i class="mdui-icon material-icons">home</i>
+        </a>
+    </div>
+</div>
+
+<!-- 抽屉栏在左侧 -->
+<div class="mdui-drawer mdui-drawer-close" id="left-drawer">
+    <div class="mdui-list">
+        <a class="mdui-list-item mdui-ripple" href="#">（等待开发...）</a>
+        <div class="mdui-divider"></div>
+        <!-- Add other list items as needed -->
+    </div>
+</div>
+
+<!-- 内容区 -->
+<div class="mdui-container mdui-typo">
+    <h3>Pure Stream <small>Just 4 fun~</small></h3>
+    <hr>
+    <p>本工具会获取直播间纯净流播放，只有直播内容，别无其它！</p>
+
+    <form>
+        <div class="mdui-textfield mdui-textfield-floating-label">
+            <label class="mdui-textfield-label" for="roomId">主播房间号</label>
+            <input class="mdui-textfield-input" type="text" maxlength="50" name="roomId" id="roomId" required>
+            <div class="mdui-textfield-error">输入不能为空</div>
+        </div>
+
+        <div class="mdui-row-md-8">
+            <div class="mdui-col">
+                <label class="mdui-radio">
+                    <input type="radio" name="platform" value="huya"
+                           checked/>
+                    <i class="mdui-radio-icon"></i>虎牙
+                </label>
+            </div>
+            <div class="mdui-col">
+                <label class="mdui-radio">
+                    <input type="radio" name="platform" value="douyu"
+                    />
+                    <i class="mdui-radio-icon"></i>斗鱼
+                </label>
+            </div>
+            <div class="mdui-col">
+                <label class="mdui-radio">
+                    <input type="radio" name="platform" value="bilibili"
+                    />
+                    <i class="mdui-radio-icon"></i>哔哩哔哩
+                </label>
+            </div>
+        </div>
+
+        <div class="mdui-text-center">
+            <button type="submit"
+                    class="mdui-btn mdui-ripple mdui-btn-raised mdui-color-theme-accent mdui-text-capitalize">
+                Pure It!
+            </button>
+            <button type="button" class="mdui-btn mdui-ripple mdui-btn-raised mdui-text-capitalize"
+                    onclick="soLucky()"
+                    mdui-tooltip="{content: '系统为你随机一个主播观看，也许Ta就是你的菜！'}">
+                Good Luck
+            </button>
+        </div>
+    </form>
+
+    <div class="mdui-typo-caption mdui-text-color-theme-secondary">注：部分直播流获取方式灵感来自 <a
+            href="https://github.com/wbt5/real-url"
+            target="_blank">Real-Url</a></div>
+
+</div>
+
+<!-- 页脚 -->
+<div class="mdui-container mdui-typo mdui-p-a-5">
+    <p class="mdui-text-center">
+        © 2024 <a href="https://www.buxiangyao.link">Zhang</a> | <a href="https://www.buxiangyao.link">🤖</a>
+    </p>
+</div>
+
+<script src="https://jsd.onmicrosoft.cn/npm/axios/dist/axios.min.js"></script>
+<script src="https://jsd.onmicrosoft.cn/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+
+<script>
+    let element = document.querySelector('a.mdui-list-item[href="' + window.location.pathname + '"]');
+    if (element) {
+        element.classList.add('mdui-list-item-active');
+    }
+
+    function historyBack(defaultUrl) {
+        if (window.history.length > 1) {
+            window.history.back()
+        } else {
+            window.location.assign(defaultUrl)
+        }
+    }
+</script>
+<script>
+    document.querySelector('form').onsubmit = function () {
+        let platform = '';
+        let elementsByName = document.getElementsByName('platform');
+        for (let i = 0; i < elementsByName.length; i++) {
+            let element = elementsByName[i];
+            if (element.checked) {
+                platform = element.value;
+                break;
+            }
+        }
+        let roomId = document.getElementById('roomId').value.trim();
+        if (roomId === '') {
+            document.getElementById('roomId').value = '';
+            return false;
+        }
+        window.location.assign('/Zlive/' + platform + '?uid=' + roomId);
+        return false;
+    }
+
+    function soLucky() {
+        window.location.assign('/Zlive/lucky');
+    }
+</script>
+</body>
+</html>

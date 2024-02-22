@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <link rel="stylesheet" href="https://jsd.onmicrosoft.cn/npm/mdui@1.0.2/dist/css/mdui.min.css">
+
+    <script>
+        // 百度统计代码
+        var _hmt = _hmt || [];
+        const localNetworkRegex =
+            /^(?:127\.0\.0\.1|localhost|192\.168\.\d{1,3}\.\d{1,3}|10\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.(1[6-9]|2[0-9]|3[0-1])\.\d{1,3}\.\d{1,3})$/;
+        // 如果不是本地网络访问，则加载百度统计代码
+        if (!localNetworkRegex.test(window.location.hostname)) {
+            (function () {
+                let hm = document.createElement("script");
+                // 打散字符防广告爬虫
+                const analytics_bd = 'bc11f5039f19a2b8c9087c2da83637ea';
+                hm.src = ['ht', 't', 'ps', ':/', '/h', 'm', '.', 'ba', 'i', 'd', 'u.c', 'o', 'm/', 'h', 'm', '.j', 's?', analytics_bd].join('');
+                let s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+        } else {
+            console.log('本地网络访问，不加载百度统计代码');
+        }
+    </script>
+
+    <meta name="referrer" content="no-referrer">
+    <title>
+        Pure Stream - Junlong+
+    </title>
+    <style>
+        .live-room-notice {
+            position: relative;
+            overflow: auto;
+            max-height: 300px;
+            border: 1px dashed gray;
+            border-radius: 5px;
+            padding: 3px;
+            margin-top: 5px;
+        }
+
+        /* 应用栏背景样式，使用 !important 以提高特定性 */
+        .mdui-appbar-fixed {
+            background: linear-gradient(45deg, #FF5F6D, #FFC371) !important;
+        }
+
+    </style>
+</head>
+
+<body class="mdui-theme-layout-auto mdui-theme-primary-teal mdui-theme-accent-deep-orange mdui-appbar-with-toolbar">
+<!-- 应用栏 -->
+<div class="mdui-appbar mdui-appbar-fixed">
+    <div class="mdui-toolbar">
+        <a href="javascript:void(0)" class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#left-drawer', swipe: true}">
+            <i class="mdui-icon material-icons">menu</i>
+        </a>
+        <a href="#" class="mdui-typo-headline">🤖</a>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="#" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: 'Z🤖'}">
+            <i class="mdui-icon material-icons">person</i>
+        </a>
+        <a href="https://www.buxiangyao.link" class="mdui-btn mdui-btn-icon" mdui-tooltip="{content: '+++++++'}">
+            <i class="mdui-icon material-icons">home</i>
+        </a>
+    </div>
+</div>
+
+<!-- 抽屉栏在左侧 -->
+<div class="mdui-drawer mdui-drawer-close" id="left-drawer">
+    <div class="mdui-list">
+        <a class="mdui-list-item mdui-ripple" href="#">（等待开发...）</a>
+        <div class="mdui-divider"></div>
+        <!-- Add other list items as needed -->
+    </div>
+</div>
+
+<!-- 内容区 -->
+<div class="mdui-container mdui-typo">
+    <h3>
+        Pure Stream <small>Just fun~</small>
+    </h3>
+    <button id="btn-ok" type="button" class="mdui-btn mdui-ripple mdui-btn-raised mdui-hidden">
+        就Ta了
+    </button>
+    <button id="btn-next-lucky" type="button" class="mdui-btn mdui-ripple mdui-btn-raised mdui-hidden">
+        下一位
+    </button>
+    <hr>
+    <p>
+        <a href="javascript:void(0)" onclick="historyBack('/ztool/live')">返回</a> / 观看直播
+    </p>
+
+    <div style="width: 100%; min-height: 100px;">
+        <!-- Dynamically set image source, title, name, and category -->
+        <img id="streamer-avatar" class="mdui-img-rounded mdui-float-left" width="80" height="80" alt="Streamer Avatar">
+        <h6 id="streamer-title" style="margin-left: 90px"></h6>
+        <span id="streamer-name" style="margin-left: 90px; display: block;"></span>
+        <span id="streamer-category" style="margin-left: 90px; display: block; font-size: .8rem"
+              class="mdui-text-color-theme-accent"></span>
+    </div>
+    <div id="player"></div>
+</div>
+
+<!-- 页脚 -->
+<div class="mdui-container mdui-typo mdui-p-a-5">
+    <p class="mdui-text-center">
+        © 2024 <a href="https://www.buxiangyao.link">Zhang</a> | <a href="https://www.buxiangyao.link">🤖</a>
+    </p>
+</div>
+
+<script src="https://jsd.onmicrosoft.cn/npm/axios/dist/axios.min.js"></script>
+<script src="https://jsd.onmicrosoft.cn/npm/mdui@1.0.2/dist/js/mdui.min.js"></script>
+
+<script>
+    let element = document.querySelector('a.mdui-list-item[href="' + window.location.pathname + '"]');
+    if (element) {
+        element.classList.add('mdui-list-item-active');
+    }
+
+    function historyBack(defaultUrl) {
+        if (window.history.length > 1) {
+            window.history.back()
+        } else {
+            window.location.assign(defaultUrl)
+        }
+    }
+</script>
+<!--<script>-->
+<!--    if (window.location.pathname.endsWith('/live/lucky')) {-->
+<!--        let next = document.getElementById('btn-next-lucky');-->
+<!--        let ok = document.getElementById('btn-ok');-->
+
+<!--        next.classList.remove('mdui-hidden');-->
+<!--        ok.classList.remove('mdui-hidden');-->
+
+<!--        next.onclick = function () {-->
+<!--            window.location.reload();-->
+<!--        }-->
+<!--        ok.onclick = function () {-->
+<!--            window.location.assign('/Zlive/douyu/6906628');-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
+<script src="https://jsd.onmicrosoft.cn/npm/flv.js/dist/flv.min.js"></script>
+<script src="https://jsd.onmicrosoft.cn/npm/hls.js/dist/hls.min.js"></script>
+<script src="https://jsd.onmicrosoft.cn/npm/dplayer/dist/DPlayer.min.js"></script>
+<script>
+    // Make a request to your API
+    fetch(`http://127.0.0.1:8888/zhibo/lucky/1`)
+        .then(response => response.json())
+        .then(data => {
+            const apiData = data.data;
+            // Set values dynamically
+            document.getElementById('streamer-avatar').src = apiData.img;
+            document.getElementById('streamer-title').textContent = apiData.title;
+            document.getElementById('streamer-name').textContent = apiData.ArthurName;
+            document.getElementById('streamer-category').innerHTML = apiData.Category;
+
+            // Set document title dynamically
+            document.title = apiData.title + " - Pure Stream - Junlong+";
+            let href = '';
+            if (apiData.url.includes('bilibili')){
+                href = 'https://live.bilibili.com/' + apiData.Category.split('>')[2].replace(' ','')
+            }
+            if (apiData.url.includes('douyu')){
+                href = 'https://www.douyu.com/' + apiData.Category.split('>')[2].replace(' ','')
+            }
+            if (apiData.url.includes('huya')){
+                href = 'https://www.huya.com/' + apiData.Category.split('>')[2].replace(' ','')
+            }
+            console.log(apiData)
+            const dp = new DPlayer({
+                container: document.getElementById('player'),
+                live: true,
+                autoplay: true,
+                screenshot: true,
+                video: {
+                    quality: [
+                        {
+                            name: '线路1',
+                            url: apiData.url,
+                            type: 'auto'
+                        },
+                    ],
+                    defaultQuality: 0,
+                },
+                contextmenu: [
+                    {
+                        text: '前往直播间',
+                        link: href,
+                    },
+                ]
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+</body>
+</html>
