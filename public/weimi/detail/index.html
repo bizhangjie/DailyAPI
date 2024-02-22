@@ -9,16 +9,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
-
+    <!-- DPlayer -->
+    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+    <!-- hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
     <style>
         body {
             font-family: 'Arial', sans-serif;
             margin: 20px;
             text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         h1 {
             color: #333;
+            margin: 0;
+        }
+
+        #backButton {
+            font-size: 16px;
+            color: #007bff;
+            cursor: pointer;
         }
 
         #imageContainer {
@@ -89,19 +110,41 @@
             cursor: pointer;
             margin-top: 10px;
         }
+
+        #videoContainer {
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        #dplayer {
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #000;
+        }
+
     </style>
 </head>
 <body>
 
+<div id="header">
+    <h1 id="title"></h1>
+    <div id="backButton" onclick="goBack()">返回</div>
+</div>
+
 <div id="loading">正在加载中...</div>
 
-<h1 id="title"></h1>
-
 <div id="imageContainer"></div>
+
+<div id="videoContainer">
+    <div id="dplayer"></div>
+</div>
 
 <p id="date"></p>
 
 <div id="idError"></div>
+
 
 <script>
     function getParameterByName(name, url) {
@@ -117,6 +160,11 @@
     function goToHome() {
         // Redirect to the home page or any other desired URL
         window.location.href = '/weimi';
+    }
+
+    function goBack() {
+        // Navigate back to the previous page
+        window.history.back();
     }
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -179,7 +227,12 @@
                         transitionEffect: "slide",
                         closeButton: true, // Enable closeButton
                     });
+                    // 如果存在视频，进行加载
+                    if (data.data.url != '') {
+                        setupDPlayer(data.data.url);
+                    }
                 })
+
                 .catch(error => {
                     console.error('Error fetching data:', error);
                     // Show the error message and home link
@@ -195,6 +248,17 @@
         }
     });
 
+
+    function setupDPlayer(videoUrl) {
+        const dp = new DPlayer({
+            container: document.getElementById('dplayer'),
+            screenshot: true,
+            video: {
+                url: videoUrl,
+                type: 'hls',
+            },
+        });
+    }
 </script>
 
 </body>

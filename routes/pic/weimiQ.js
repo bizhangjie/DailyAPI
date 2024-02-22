@@ -21,7 +21,7 @@ let updateTime = new Date().toISOString();
 const Host = "https://weme5.com";
 
 // 数据处理
-const getData = (data,ctx) => {
+const getData = (data, ctx) => {
     if (!data) return [];
     try {
         var listData = [];
@@ -77,14 +77,21 @@ weimiQRouter.get("/weimiQ/:uid", async (ctx) => {
             let ImageList = []
             $('.wp-block-image').each((index, element) => {
                 const img = $(element).find('img').attr('src');
-                if (img.includes('cloudfront.net')){
-                    ImageList.push( 'http://'+ ctx.request.host + '/weimiQ/?img=' + img + '.jpg');
+                if (img.includes('cloudfront.net')) {
+                    ImageList.push('http://' + ctx.request.host + '/weimiQ/?img=' + img + '.jpg');
                 }
             });
+            let urlPlay;
+            try {
+                urlPlay = htmlString.match(/url: "(.+?)"/)[1];
+            } catch (e) {
+                urlPlay = '';
+            }
             const data = {
                 title: $('.article-title').text(),
                 ImageList: ImageList,
-                date: $('.article-meta').text().replace(/\t/g,'').replace(/\n /g,'')
+                date: $('.article-meta').text().replace(/\t/g, '').replace(/\n /g, ''),
+                url: urlPlay
             }
             // 将数据写入缓存
             await set(key, data);
@@ -124,8 +131,8 @@ weimiQRouter.get("/weimiQ/:wd/:page", async (ctx) => {
                     code: 200,
                     ...routerInfo,
                     message: "数据为空",
-                    data:{
-                        data:[]
+                    data: {
+                        data: []
                     }
                 };
                 return false;
@@ -147,7 +154,7 @@ weimiQRouter.get("/weimiQ/:wd/:page", async (ctx) => {
         ctx.body = {
             code: 200,
             message: "数据为空",
-            data:{
+            data: {
                 data: []
             }
         };
@@ -156,7 +163,7 @@ weimiQRouter.get("/weimiQ/:wd/:page", async (ctx) => {
 
 // 图片转码
 weimiQRouter.get("/weimiQ/", async (ctx) => {
-    const { img } = ctx.query;
+    const {img} = ctx.query;
     // 使用正则表达式检查uid是否符合网址格式
     const urlPattern = /^(?:https?:\/\/)[^\s]+$/;
     if (!urlPattern.test(img)) {
@@ -166,7 +173,7 @@ weimiQRouter.get("/weimiQ/", async (ctx) => {
     }
 
     // 根据uid的图片，保存图片数据，然后返回给用户
-    const response = await axios.get(img.replace('.jpg',''), {
+    const response = await axios.get(img.replace('.jpg', ''), {
         responseType: "arraybuffer"
     });
     const ImageByte = 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))
