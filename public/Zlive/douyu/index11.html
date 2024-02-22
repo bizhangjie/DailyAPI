@@ -77,7 +77,7 @@
 </div>
 
 <!-- 内容区 -->
-<div class="mdui-container mdui-typo">
+<div class="mdui-container mdui-typo" id="mdui-container">
     <h3>
         Pure Stream <small>Just fun~</small>
     </h3>
@@ -164,7 +164,7 @@
     if (streamIdMatch && streamIdMatch[1]) {
         const streamId = streamIdMatch[1];
         // Make a request to your API
-        fetch(`http://127.0.0.1:8888/zhibo/douyu/${streamId}`)
+        fetch(`https://api.buxiangyao.link/zhibo/douyu/${streamId}`)
             .then(response => response.json())
             .then(data => {
                 const apiData = data.data;

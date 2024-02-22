@@ -162,7 +162,7 @@
     if (streamIdMatch && streamIdMatch[1]) {
         const streamId = streamIdMatch[1];
         // Make a request to your API
-        fetch(`http://127.0.0.1:8888/zhibo/huya/${streamId}`)
+        fetch(`https://api.buxiangyao.link/zhibo/huya/${streamId}`)
             .then(response => response.json())
             .then(data => {
                 const apiData = data.data;
