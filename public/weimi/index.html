@@ -189,12 +189,14 @@
             } else {
                 // If there's result, hide the "No Result" card
                 document.getElementById('noResultCard').classList.remove('show');
+                if (page === 1) {
+                    // Clear existing content only for the first page of a new search
+                    clearDataContainer();
+                }
+                renderData(data);
             }
-            if (page === 1) {
-                // Clear existing content only for the first page of a new search
-                clearDataContainer();
-            }
-            renderData(data);
+
+
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {

@@ -43,7 +43,7 @@ const getData = (data,ctx) => {
                 href: Host + articleHref.replace('./', ''),
                 date: date
             })
-            console.log(`Article ${index + 1}: Text: ${articleText}, Href:${articleHref.split('/')[3]}, Img:${articleImg}, desc:${desc}`);
+            // console.log(`Article ${index + 1}: Text: ${articleText}, Href:${articleHref.split('/')[3]}, Img:${articleImg}, desc:${desc}`);
         });
         return {
             // count: $('.last-page').first().text(),
