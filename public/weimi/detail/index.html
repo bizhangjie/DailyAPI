@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>微密圈</title>
-
     <!-- Include fancyBox CSS and JS files -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -43,25 +42,32 @@
         }
 
         #imageContainer {
-            width: 100%; /* Ensure full width */
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between; /* Adjusted from space-around to space-between */
+            justify-content: space-between;
             gap: 10px;
             margin-top: 20px;
         }
 
         a {
             text-decoration: none;
-            width: calc(25% - 10px); /* Adjusted max-width to achieve 4 images per row with 10px gap */
+            width: calc(25% - 10px);
+            position: relative;
         }
 
         img {
-            width: 100%; /* Make the images fill the width of the parent anchor */
+            width: 100%;
             height: auto;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             cursor: pointer;
+        }
+
+        .placeholder {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         p {
@@ -78,11 +84,11 @@
         /* Media Query for screens smaller than 768px */
         @media (max-width: 768px) {
             #imageContainer {
-                justify-content: space-around; /* Adjusted to space-around for smaller screens */
+                justify-content: space-around;
             }
 
             a {
-                width: calc(50% - 10px); /* Adjusted max-width to achieve 2 images per row with 10px gap */
+                width: calc(50% - 10px);
             }
         }
 
@@ -93,14 +99,14 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: #f44336; /* Red color for 404 background */
+            background-color: #f44336;
             padding: 10px;
             border-radius: 8px;
-            display: none; /* Initially hide the element */
+            display: none;
         }
 
         #idError.show {
-            display: block; /* Show the element when the "show" class is applied */
+            display: block;
         }
 
         #homeLink {
@@ -123,7 +129,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-color: #000;
         }
-
     </style>
 </head>
 <body>
@@ -133,7 +138,9 @@
     <div id="backButton" onclick="goBack()">返回</div>
 </div>
 
-<div id="loading">正在加载中...</div>
+<div id="loading">
+    正在加载中...
+</div>
 
 <div id="imageContainer"></div>
 
@@ -144,7 +151,6 @@
 <p id="date"></p>
 
 <div id="idError"></div>
-
 
 <script>
     function getParameterByName(name, url) {
@@ -158,31 +164,24 @@
     }
 
     function goToHome() {
-        // Redirect to the home page or any other desired URL
         window.location.href = '/weimi';
     }
 
     function goBack() {
-        // Navigate back to the previous page
         window.history.back();
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        // Get the value of the "id" parameter from the URL
         var idParameter = getParameterByName('id');
 
         if (idParameter) {
-            // Display loading message
             document.getElementById('loading').style.display = 'block';
 
-            // Fetch data using the idParameter
             fetch('https://api.buxiangyao.link/weimiQ/' + idParameter)
                 .then(response => response.json())
                 .then(data => {
-                    // Hide loading message
                     document.getElementById('loading').style.display = 'none';
-
-                    // Update HTML elements with the fetched data
+                    document.getElementById('imageContainer').style.display = 'flex';
                     document.getElementById('title').textContent = data.data.title;
                     document.getElementById('date').textContent = data.data.date;
 
@@ -190,14 +189,25 @@
                     data.data.ImageList.forEach(imageUrl => {
                         const imgElement = document.createElement('a');
                         imgElement.href = imageUrl;
-                        imgElement.setAttribute('data-fancybox', 'gallery'); // Add fancyBox attribute
+                        imgElement.setAttribute('data-fancybox', 'gallery');
+
+                        const placeholderImg = document.createElement('img');
+                        placeholderImg.src = '../weimi/loading.gif';
+                        placeholderImg.classList.add('placeholder');
+                        imgElement.appendChild(placeholderImg);
+
                         const img = document.createElement('img');
                         img.src = imageUrl;
+                        img.onload = function () {
+                            placeholderImg.style.display = 'none';
+                            img.style.display = 'block';
+                        };
+                        img.style.display = 'none';
                         imgElement.appendChild(img);
+
                         imageContainer.appendChild(imgElement);
                     });
 
-                    // Activate fancyBox with closeButton set to true
                     $('[data-fancybox="gallery"]').fancybox({
                         loop: true,
                         buttons: [
@@ -225,29 +235,25 @@
                             autoStart: false,
                         },
                         transitionEffect: "slide",
-                        closeButton: true, // Enable closeButton
+                        closeButton: true,
                     });
-                    // 如果存在视频，进行加载
+
                     if (data.data.url != '') {
                         setupDPlayer(data.data.url);
                     }
                 })
-
                 .catch(error => {
                     console.error('Error fetching data:', error);
-                    // Show the error message and home link
                     document.getElementById('idError').textContent = '数据加载失败，请重试。';
-                    document.getElementById('idError').classList.add('show'); // Apply "show" class
+                    document.getElementById('idError').classList.add('show');
                     document.getElementById('idError').innerHTML += '<div id="homeLink" onclick="goToHome()">返回首页</div>';
                 });
         } else {
-            // Display error message if "id" parameter is missing
             document.getElementById('idError').textContent = '请提供有效的 ID 参数。';
-            document.getElementById('idError').classList.add('show'); // Apply "show" class
+            document.getElementById('idError').classList.add('show');
             document.getElementById('idError').innerHTML += '<div id="homeLink" onclick="goToHome()">返回首页</div>';
         }
     });
-
 
     function setupDPlayer(videoUrl) {
         const dp = new DPlayer({

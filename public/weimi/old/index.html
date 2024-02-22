@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon"/>
+    <link rel="shortcut icon" href="../favicon.svg" type="image/x-icon"/>
     <title>微密圈中心</title>
     <style>
         body {
@@ -211,53 +211,19 @@
         }
     };
 
-    // 使用new Image版本
-    // <!-- 修改 renderData 函数，为 img 元素设置默认 GIF -->
-    // const renderData = (data) => {
-    //     data.forEach(item => {
-    //         const card = document.createElement('div');
-    //         card.classList.add('card');
-    //         card.innerHTML = `
-    //         <div class="card-content">
-    //             <img src="/weimi/loading.gif" data-src="${item.img}" alt="${item.title}" onload="loadActualImage(this)">
-    //             <h3>${item.title}</h3>
-    //             <p>Date: ${item.date}</p>
-    //             <a href="/weimi/detail?id=${item.aid}" target="_blank">Read more</a>
-    //         </div>
-    //     `;
-    //         container.appendChild(card);
-    //     });
-    //
-    //     setTimeout(() => {
-    //         document.getElementById('loadMoreButton').style.display = 'block';
-    //         container.classList.remove('blurred');
-    //     }, 500);
-    // };
-    //
-    // <!-- 修改 loadActualImage 函数，使用新的 Image 对象加载图片 -->
-    // const loadActualImage = (img) => {
-    //     const actualImage = new Image();
-    //     actualImage.onload = function () {
-    //         img.src = this.src;
-    //     };
-    //     actualImage.src = img.getAttribute('data-src');
-    //     img.removeAttribute('data-src');
-    // };
-
-
-    <!-- 修改 renderData 函数，为 img 元素设置默认 GIF -->
     const renderData = (data) => {
+
         data.forEach(item => {
             const card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `
-            <div class="card-content">
-                <img src="/weimi/default-image.gif" data-src="${item.img}" alt="${item.title}" class="lazy-image">
-                <h3>${item.title}</h3>
-                <p>Date: ${item.date}</p>
-                <a href="/weimi/detail?id=${item.aid}" target="_blank">Read more</a>
-            </div>
-        `;
+        <div class="card-content">
+          <img src="${item.img}" alt="${item.title}">
+          <h3>${item.title}</h3>
+          <p>Date: ${item.date}</p>
+          <a href="/weimi/detail?id=${item.aid}" target="_blank">Read more</a>
+        </div>
+      `;
             container.appendChild(card);
         });
 
@@ -266,23 +232,6 @@
             container.classList.remove('blurred');
         }, 500);
     };
-
-    // 使用 IntersectionObserver 来检测图片是否进入视口
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const lazyImage = entry.target;
-                lazyImage.src = lazyImage.getAttribute('data-src');
-                observer.unobserve(lazyImage);
-            }
-        });
-    });
-
-    // 为所有带有 lazy-image 类的图片设置观察者
-    document.querySelectorAll('.lazy-image').forEach(img => {
-        observer.observe(img);
-    });
-
 
     const clearDataContainer = () => {
         document.getElementById('dataContainer').innerHTML = '';
