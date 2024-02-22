@@ -43,7 +43,7 @@ const getData = (data,ctx) => {
                 href: Host + articleHref.replace('./', ''),
                 date: date
             })
-            // console.log(`Article ${index + 1}: Text: ${articleText}, Href:${articleHref.split('/')[3]}, Img:${articleImg}, desc:${desc}`);
+            console.log(`Article ${index + 1}: Text: ${articleText}, Href:${articleHref.split('/')[3]}, Img:${articleImg}, desc:${desc}`);
         });
         return {
             // count: $('.last-page').first().text(),
@@ -121,9 +121,12 @@ weimiQRouter.get("/weimiQ/:wd/:page", async (ctx) => {
             updateTime = new Date().toISOString();
             if (!data) {
                 ctx.body = {
-                    code: 500,
+                    code: 200,
                     ...routerInfo,
-                    message: "获取失败",
+                    message: "数据为空",
+                    data:{
+                        data:[]
+                    }
                 };
                 return false;
             }
@@ -142,8 +145,11 @@ weimiQRouter.get("/weimiQ/:wd/:page", async (ctx) => {
     } catch (error) {
         console.error(error);
         ctx.body = {
-            code: 500,
-            message: "获取失败",
+            code: 200,
+            message: "数据为空",
+            data:{
+                data: []
+            }
         };
     }
 });

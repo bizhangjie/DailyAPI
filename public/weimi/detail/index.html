@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微密圈</title>
+
+    <!-- Include fancyBox CSS and JS files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #imageContainer {
+            width: 100%; /* Ensure full width */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between; /* Adjusted from space-around to space-between */
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            width: calc(25% - 10px); /* Adjusted max-width to achieve 4 images per row with 10px gap */
+        }
+
+        img {
+            width: 100%; /* Make the images fill the width of the parent anchor */
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        p {
+            color: #555;
+            margin-top: 10px;
+        }
+
+        #loading {
+            display: none;
+            font-size: 18px;
+            color: #777;
+        }
+
+        /* Media Query for screens smaller than 768px */
+        @media (max-width: 768px) {
+            #imageContainer {
+                justify-content: space-around; /* Adjusted to space-around for smaller screens */
+            }
+
+            a {
+                width: calc(50% - 10px); /* Adjusted max-width to achieve 2 images per row with 10px gap */
+            }
+        }
+
+        #idError {
+            color: white;
+            font-size: 16px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f44336; /* Red color for 404 background */
+            padding: 10px;
+            border-radius: 8px;
+            display: none; /* Initially hide the element */
+        }
+
+        #idError.show {
+            display: block; /* Show the element when the "show" class is applied */
+        }
+
+        #homeLink {
+            color: white;
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="loading">正在加载中...</div>
+
+<h1 id="title"></h1>
+
+<div id="imageContainer"></div>
+
+<p id="date"></p>
+
+<div id="idError"></div>
+
+<script>
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function goToHome() {
+        // Redirect to the home page or any other desired URL
+        window.location.href = '/weimi';
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the value of the "id" parameter from the URL
+        var idParameter = getParameterByName('id');
+
+        if (idParameter) {
+            // Display loading message
+            document.getElementById('loading').style.display = 'block';
+
+            // Fetch data using the idParameter
+            fetch('https://api.buxiangyao.link/weimiQ/' + idParameter)
+                .then(response => response.json())
+                .then(data => {
+                    // Hide loading message
+                    document.getElementById('loading').style.display = 'none';
+
+                    // Update HTML elements with the fetched data
+                    document.getElementById('title').textContent = data.data.title;
+                    document.getElementById('date').textContent = data.data.date;
+
+                    const imageContainer = document.getElementById('imageContainer');
+                    data.data.ImageList.forEach(imageUrl => {
+                        const imgElement = document.createElement('a');
+                        imgElement.href = imageUrl;
+                        imgElement.setAttribute('data-fancybox', 'gallery'); // Add fancyBox attribute
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        imgElement.appendChild(img);
+                        imageContainer.appendChild(imgElement);
+                    });
+
+                    // Activate fancyBox with closeButton set to true
+                    $('[data-fancybox="gallery"]').fancybox({
+                        loop: true,
+                        buttons: [
+                            "slideShow",
+                            "fullScreen",
+                            "thumbs",
+                            "download",
+                            "close"
+                        ],
+                        backFocus: false,
+                        trapFocus: false,
+                        autoFocus: false,
+                        touch: {
+                            vertical: false,
+                        },
+                        infobar: false,
+                        toolbar: true,
+                        clickContent: false,
+                        clickSlide: false,
+                        clickOutside: true,
+                        dblclickContent: false,
+                        dblclickSlide: false,
+                        dblclickOutside: false,
+                        slideShow: {
+                            autoStart: false,
+                        },
+                        transitionEffect: "slide",
+                        closeButton: true, // Enable closeButton
+                    });
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    // Show the error message and home link
+                    document.getElementById('idError').textContent = '数据加载失败，请重试。';
+                    document.getElementById('idError').classList.add('show'); // Apply "show" class
+                    document.getElementById('idError').innerHTML += '<div id="homeLink" onclick="goToHome()">返回首页</div>';
+                });
+        } else {
+            // Display error message if "id" parameter is missing
+            document.getElementById('idError').textContent = '请提供有效的 ID 参数。';
+            document.getElementById('idError').classList.add('show'); // Apply "show" class
+            document.getElementById('idError').innerHTML += '<div id="homeLink" onclick="goToHome()">返回首页</div>';
+        }
+    });
+
+</script>
+
+</body>
+</html>
