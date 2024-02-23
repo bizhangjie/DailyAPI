@@ -30,7 +30,6 @@
 
     <meta name="referrer" content="no-referrer">
     <title>
-        小毅主播q_斗鱼 -
         Pure Stream - Junlong+
     </title>
     <style>
@@ -47,6 +46,10 @@
         /* 应用栏背景样式，使用 !important 以提高特定性 */
         .mdui-appbar-fixed {
             background: linear-gradient(45deg, #FF5F6D, #FFC371) !important;
+        }
+
+        .mdui-container {
+            display: none;
         }
 
     </style>
@@ -107,7 +110,7 @@
 </div>
 
 <!-- 页脚 -->
-<div class="mdui-container mdui-typo mdui-p-a-5">
+<div class="mdui-container mdui-typo mdui-p-a-5" id="mdui-yejiao">
     <p class="mdui-text-center">
         © 2024 <a href="https://www.buxiangyao.link">Zhang</a> | <a href="https://www.buxiangyao.link">🤖</a>
     </p>
@@ -204,8 +207,12 @@
                 });
             })
             .catch(error => console.error('Error fetching data:', error));
-        document.getElementById('mdui-container').style.display = 'block';
-        document.getElementById('loading').style.display = 'none';
+        setTimeout(function () {
+            document.getElementById('mdui-container').style.display = 'block';
+            document.getElementById('mdui-yejiao').style.display = 'block';
+            // document.getElementById('loading').style.display = 'none';
+        }, 1000)
+
 
     } else {
         console.error('Stream ID not found in the URL');
