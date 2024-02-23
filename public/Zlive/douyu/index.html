@@ -109,6 +109,11 @@
     <div id="player"></div>
 </div>
 
+<!-- 内容加载中的提示 -->
+<div id="loading" class="mdui-container mdui-typo mdui-p-a-5" style="text-align: center;">
+    <p class="mdui-text-center">数据加载中...</p>
+</div>
+
 <!-- 页脚 -->
 <div class="mdui-container mdui-typo mdui-p-a-5" id="mdui-yejiao">
     <p class="mdui-text-center">
@@ -133,34 +138,11 @@
         }
     }
 </script>
-<!--<script>-->
-<!--    if (window.location.pathname.endsWith('/live/lucky')) {-->
-<!--        let next = document.getElementById('btn-next-lucky');-->
-<!--        let ok = document.getElementById('btn-ok');-->
 
-<!--        next.classList.remove('mdui-hidden');-->
-<!--        ok.classList.remove('mdui-hidden');-->
-
-<!--        next.onclick = function () {-->
-<!--            window.location.reload();-->
-<!--        }-->
-<!--        ok.onclick = function () {-->
-<!--            window.location.assign('/Zlive/douyu/6906628');-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
 <script src="https://jsd.onmicrosoft.cn/npm/flv.js/dist/flv.min.js"></script>
 <script src="https://jsd.onmicrosoft.cn/npm/hls.js/dist/hls.min.js"></script>
 <script src="https://jsd.onmicrosoft.cn/npm/dplayer/dist/DPlayer.min.js"></script>
 <script>
-    // Dynamically set content based on API response
-    // const apiData = {
-    //     "title": "(小毅）林正英，僵尸，女鬼，护体",
-    //     "img": "https://apic.douyucdn.cn/upload/avatar_v3/202310/2d2a5e1d512744b195a8f0c7bacdbb73_middle.jpg",
-    //     "ArthurName": "小毅主播q",
-    //     "Category": "斗鱼 > 一起看 > <a href='https://www.douyu.com/6906628' target='_blank'>6906628</a>",
-    //     "url": "https://tc-tct.douyucdn2.cn/dyliveflv3/6906628rVU6lqJLr.flv?wsAuth=327782537f77f3021ee011cc7202baf9&token=web-h5-0-6906628-ee25442680ff9b1b59a2c1d4a03e593d5f103cb9f7e9dc3a&logo=0&expire=0&did=10000000000000000000000000001501&pt=2&st=0&sid=383727972&mcid2=0&origin=tct&mix=0&isp="
-    // };
     // Get the current URL
     const currentUrl = window.location.href;
 
@@ -205,13 +187,14 @@
                         },
                     ]
                 });
+
+                setTimeout(function () {
+                    document.getElementById('mdui-container').style.display = 'block';
+                    document.getElementById('mdui-yejiao').style.display = 'block';
+                    document.getElementById('loading').style.display = 'none';
+                }, 500)
             })
             .catch(error => console.error('Error fetching data:', error));
-        setTimeout(function () {
-            document.getElementById('mdui-container').style.display = 'block';
-            document.getElementById('mdui-yejiao').style.display = 'block';
-            // document.getElementById('loading').style.display = 'none';
-        }, 1000)
 
 
     } else {
