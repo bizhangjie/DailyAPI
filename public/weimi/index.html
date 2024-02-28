@@ -245,14 +245,14 @@
     // };
 
 
-    <!-- 修改 renderData 函数，为 img 元素设置默认 GIF -->
+    // Inside the renderData function
     const renderData = (data) => {
         data.forEach(item => {
             const card = document.createElement('div');
             card.classList.add('card');
             card.innerHTML = `
             <div class="card-content">
-                <img src="/weimi/default-image.gif" data-src="${item.img}" alt="${item.title}" class="lazy-image">
+                <img src="/weimi/loading.gif" data-src="${item.img}" alt="${item.title}" class="lazy-image">
                 <h3>${item.title}</h3>
                 <p>Date: ${item.date}</p>
                 <a href="/weimi/detail?id=${item.aid}" target="_blank">Read more</a>
@@ -264,8 +264,14 @@
         setTimeout(() => {
             document.getElementById('loadMoreButton').style.display = 'block';
             container.classList.remove('blurred');
+
+            // Add observer for newly added lazy images
+            document.querySelectorAll('.lazy-image').forEach(img => {
+                observer.observe(img);
+            });
         }, 500);
     };
+
 
     // 使用 IntersectionObserver 来检测图片是否进入视口
     const observer = new IntersectionObserver((entries, observer) => {
@@ -278,10 +284,10 @@
         });
     });
 
-    // 为所有带有 lazy-image 类的图片设置观察者
-    document.querySelectorAll('.lazy-image').forEach(img => {
-        observer.observe(img);
-    });
+    // // 为所有带有 lazy-image 类的图片设置观察者
+    // document.querySelectorAll('.lazy-image').forEach(img => {
+    //     observer.observe(img);
+    // });
 
 
     const clearDataContainer = () => {
