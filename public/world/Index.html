@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网站导航</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        header {
+            background-color: #4285f4;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 36px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        nav {
+            padding: 20px;
+        }
+
+        .category {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #4285f4;
+        }
+
+        nav a {
+            display: block;
+            padding: 15px;
+            text-align: center;
+            text-decoration: none;
+            background-color: #fff;
+            color: #4285f4;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin: 0 auto;
+            max-width: 80%;
+            overflow: hidden;
+            margin-top: 10px;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    网站导航
+</header>
+
+<nav id="navigation">
+
+</nav>
+
+
+<footer>
+    <p>欢迎使用网站导航</p>
+    <p>一个方便快捷的导航页面，帮助您快速访问常用网站。</p>
+    &copy; 2024 网站导航
+</footer>
+
+<script>
+    // 模拟从后台获取数据
+    const dataFromBackend = [
+        {
+            category: "搜索引擎", links: [
+                {url: "https://api.buxiangyaol.link/J1", name: "91"},
+                {url: "https://api.buxiangyaol.link/weimi", name: "维密Q"},
+            ]
+        },
+        {
+            category: "直播", links: [
+                {url: "https://api.buxiangyaol.link/Zlive", name: "直播秀"},
+
+            ]
+        },
+        {
+            category: "解析", links: [
+                {url: "https://api.buxiangyaol.link/play", name: "解析秀"},
+            ]
+        },
+        // 添加更多分类
+    ];
+
+    // 渲染导航链接
+    const navigation = document.getElementById("navigation");
+    dataFromBackend.forEach(categoryData => {
+        const categoryElement = document.createElement("div");
+        categoryElement.classList.add("category");
+        categoryElement.textContent = categoryData.category;
+        navigation.appendChild(categoryElement);
+
+        categoryData.links.forEach(linkData => {
+            const link = document.createElement("a");
+            link.href = linkData.url;
+            link.target = "_blank";
+            link.textContent = linkData.name;
+            navigation.appendChild(link);
+        });
+    });
+</script>
+
+</body>
+</html>

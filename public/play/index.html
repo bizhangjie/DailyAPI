@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="全网VIP影视会员解析" content="支持爱奇艺、优酷、土豆、乐视、搜狐等视频解析."/>
+    <meta name="azure0000" content="VIP影视会员"/>
+    <title>弹幕VIP视频解析</title>
+    <!-- Favicon -->
+    <link rel="icon" href="./assets/img/vplay.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.zhimg.com/react-nice-resume@1.0.3/css/css2-NotoSerifSC_swap.css">
+    <link rel="stylesheet" href="https://unpkg.zhimg.com/react-nice-resume@1.0.3/css/font-awesome.css"/>
+    <link type="text/css" rel="stylesheet" href="./assets/css/argon.min.css"/>
+    <script src="https://npm.elemecdn.com/jquery@3.5.1/dist/jquery.min.js"></script>
+    <script src="https://npm.elemecdn.com/bootstrap@3.3.5/dist/js/bootstrap.min.js"></script>
+
+    <!-- 引入SweetAlert2的CSS和JS文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <script>
+        // // 禁用右键单击
+        // document.addEventListener('contextmenu', function (e) {
+        //     e.preventDefault();
+        // });
+        //
+        // document.onkeydown = function (e) {
+        //     if (event.keyCode == 123) { // F12键的键码是123
+        //
+        //         Swal.fire({
+        //             icon: 'error',
+        //             title: 'Oops...',
+        //             text: 'Something went wrong!',
+        //             footer: '<a href="">Why is this happening ?</a>'
+        //         })
+        //
+        //         return false;
+        //     }
+        // }
+    </script>
+
+    <style>
+        body {
+            background: #f7f0ac; /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #f0acf7, #acf7f0, #f7f0ac); /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #f0acf7, #acf7f0, #f7f0ac); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        .panel-default {
+            background: #000000;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: lightseagreen;
+            border-color: lightseagreen;
+        }
+    </style>
+    <script type="text/javascript">eval(function (p, a, c, k, e, d) {
+        e = function (c) {
+            return (c < a ? "" : e(parseInt(c / a))) + ((c = c % a) > 35 ? String.fromCharCode(c + 29) : c.toString(36))
+        };
+        if (!''.replace(/^/, String)) {
+            while (c--) d[e(c)] = k[c] || e(c);
+            k = [function (e) {
+                return d[e]
+            }];
+            e = function () {
+                return '\\w+'
+            };
+            c = 1
+        }
+        ;
+        while (c--) if (k[c]) p = p.replace(new RegExp('\\b' + e(c) + '\\b', 'g'), k[c]);
+        return p
+    }('b a(){0 6=1.2("9").4;0 5=1.2("3");0 3=1.2("3").c;0 8=5.e[3].4;0 7=1.2("f");7.d=8+6}', 16, 16, 'var|document|getElementById|jk|value|jkurl|diz|cljurl|jkv|url|dihejk|function|selectedIndex|src|options|player'.split('|'), 0, {}))</script>
+</head>
+<body>
+<header class="header-global">
+    <nav id="navbar-main" class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom"
+    >
+        <div class="container">
+            <a class="navbar-brand smooth " style="font-size: large" href="/">弹幕VIP视频解析</a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbar_global"
+                    aria-controls="navbar_global"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse" id="navbar_global">
+                <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+                    <li class="nav-item">
+                        <a
+                                class="nav-link nav-link-icon"
+                                href="https://blog.bizhangjie.top"
+                                target="_blank"
+                                data-toggle="tooltip"
+                                title="弹幕VIP"
+                        >
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="nav-link-inner--text d-lg-none">博客</span>
+                        </a>
+                    </li>
+                    <!--                    <li class="nav-item">-->
+                    <!--                        <a-->
+                    <!--                                class="nav-link nav-link-icon"-->
+                    <!--                                href="https://youtube.com/channel/UCCY24D6Az4xT2XUHpqjHMpg"-->
+                    <!--                                target="_blank"-->
+                    <!--                                data-toggle="tooltip"-->
+                    <!--                                title="Follow us on Youtube"-->
+                    <!--                        >-->
+                    <!--                            <i class="fa fa-youtube"></i>-->
+                    <!--                            <span class="nav-link-inner&#45;&#45;text d-lg-none">Youtube</span>-->
+                    <!--                        </a>-->
+                    <!--                    </li>-->
+                    <li class="nav-item">
+                        <a
+                                class="nav-link nav-link-icon"
+                                href="/"
+                                target="_blank"
+                                data-toggle="tooltip"
+                                title="弹幕影视"
+                        >
+                            <i class="fa fa-viadeo-square"></i>
+                            <span class="nav-link-inner--text d-lg-none">弹幕影视</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a
+                                class="nav-link nav-link-icon"
+                                href="https://github.com/bizhangjie"
+                                target="_blank"
+                                data-toggle="tooltip"
+                                title="Star us on Github"
+                        >
+                            <i class="fa fa-github"></i>
+                            <span class="nav-link-inner--text d-lg-none">Github</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!---->
+<main class="profile-page">
+    <section class="section-profile-cover section-shaped my-0" style="height: 400px">
+        <!-- Circles background -->
+        <div class="shape shape-style-1 shape-primary alpha-4">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew">
+            <svg
+                    x="0"
+                    y="0"
+                    viewBox="0 0 2560 100"
+                    preserveAspectRatio="none"
+                    version="1.1"
+                    xmlns="https://www.w3.org/2000/svg"
+            >
+                <polygon
+                        class="fill-white"
+                        points="2560 0 2560 100 0 100"
+                ></polygon>
+            </svg>
+        </div>
+    </section>
+    <section class="section" style="padding-top: 0rem">
+        <div class="container">
+            <div class="card card-profile shadow mt--300 ">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-3 order-lg-2">
+                            <div class="card-profile-image">
+                                <a href="#">
+                                    <!--                                    <img-->
+                                    <!--                                            src="https://npm.elemecdn.com/boke-cdn/img/logo.jpg"-->
+                                    <!--                                            class="rounded-bottom"-->
+                                    <!--                                    />-->
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                                class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center"
+                        >
+                        </div>
+                        <div class="col-lg-4 order-lg-1">
+                            <div class="card-profile-stats d-flex justify-content-center">
+                                <div>
+                                    <span class="heading">20</span>
+                                    <span class="description">解析线路</span>
+                                </div>
+                                <div>
+                                    <span class="heading">8+</span>
+                                    <span class="description">视频网站</span>
+                                </div>
+                                <div>
+                                    <span class="heading">1+</span>
+                                    <span class="description">全平台</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="table table-bordered">
+                        <tbody>
+                        <div class="col-md-14 column">
+                            <div class="panel panel-default">
+                                <div id="kj" class="panel-body">
+                                    <iframe src="javascript:;" allowfullscreen="true" id="player" width="100%"
+                                            height="400px" allowtransparency="true" frameborder="0"
+                                            scrolling="no"></iframe>
+                                </div>
+                            </div>
+                        </div>
+                        <tr>
+                            <div class="col-md-14 column">
+                                <form method="get" id="1233911832">
+                                    <br>
+                                    <div class="form-group row">
+                                        <span class="col-sm-2 col-form-label text-right">选择接口：</span>
+                                        <div class="col-sm-10">
+                                            <select class="form-control input-lg" id="jk">
+                                                <option value="https://jx.jsonplayer.com/player/?url=" selected="">B站1
+                                                </option>
+                                                <option value="https://jx.aidouer.net/?url=">爱豆</option>
+                                                <option value="https://www.gai4.com/?url=">CHok</option>
+                                                <option value="https://jx.rdhk.net/?v=">RDHK</option>
+                                                <option value="https://jx.blbo.cc:4433/?url=">人人迷</option>
+                                                <option value="https://jsap.attakids.com/?url=">思古3</option>
+                                                <option value="https://jx.dj6u.com/?url=">听乐</option>
+                                                <option value="https://yun.nxflv.com/?url=">
+                                                    （通用vip接口①（支持全网大部分原画，超级稳定）
+                                                </option>
+                                                <option value="https://okjx.cc/?url=">（通用vip接口②（OK)</option>
+                                                <option value="https://jx.xmflv.com/?url=">（通用vip接口③）</option>
+                                                <option value="https://vip.bljiex.com/?v=">（通用vip接口④）</option>
+                                                <option value="https://api.jhdyw.vip/?url=">（通用vip接口⑤）</option>
+                                                <option value="https://www.8090.la/8090/?url=">（通用vip接口⑥）</option>
+                                                <option value="https://www.ckplayer.vip/jiexi/?url=">（通用vip接口⑦）</option>
+                                                <option value="https://ckmov.ccyjjd.com/ckmov/?url=">（通用vip接口⑧）</option>
+                                                <option value="https://jx.m3u8.tv/jiexi/?url=">（通用vip接口⑨）</option>
+                                                <option value="https://vip.laobandq.com/jiexi.php?url=">（通用vip接口⑩）
+                                                </option>
+                                                <option value="https://ckmov.ccyjjd.com/ckmov/?url=">（8090解析）</option>
+                                                <option value="https://www.pangujiexi.cc/jiexi.php?url=">（盘古解析）</option>
+                                                <option value="https://im1907.top/?jx=">纯净1</option>
+                                                <option value="https:// ">更多接口待添加...</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="form-group row">
+                                        <span class="col-sm-2 col-form-label text-right ">视频地址：</span>
+                                        <div class="col-sm-10">
+                                            <input class="form-control input-lg" type="search" placeholder="输入播放地址"
+                                                   id="url">
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div>
+                                        <div class=" text-center">
+                                            <button type="button" class="btn btn-primary btn-round" onclick="dihejk()">
+                                                <i class="fa fa-send-o"></i>开 始 解 析
+                                            </button>
+                                        </div>
+                                        <br>
+                                        <div class=" text-center">
+                                            <button href="" class="btn btn-primary btn-round"><i
+                                                    class="fa fa-send-o"></i> 使用方法：复制任意视频网站VIP链接，粘贴到视频地址栏，点击开始解析即可
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </tr>
+                        </tbody>
+                        <!--换行-->
+                    </table>
+
+
+                    <div class="mt-5 py-5 border-top text-center">
+                        <div class="row justify-content-center">
+                            <div class="col-sm-9">
+                                <a class="btn btn-success mt-3" href="https://www.le.com/" rel="nofollow"
+                                   target="_blank">乐视视频</a>
+                                <a class="btn btn-danger mt-3" href="https://www.iqiyi.com/" rel="nofollow"
+                                   target="_blank">奇艺视频</a>
+                                <a class="btn btn-info mt-3" href="https://www.mgtv.com/" rel="nofollow"
+                                   target="_blank">芒果视频</a>
+                                <a class="btn btn-warning  mt-3" href="https://www.tudou.com/" rel="nofollow"
+                                   target="_blank">土豆视频</a>
+                                <br>
+                                <div class="hr "></div>
+                                <a class="btn btn-primary mt-3" href="https://v.qq.com/" rel="nofollow" target="_blank">腾讯视频</a>
+                                <a class="btn btn-info mt-3" href="https://www.youku.com/" rel="nofollow"
+                                   target="_blank">优酷视频</a>
+                                <a class="btn btn-success mt-3" href="https://tv.sohu.com/" rel="nofollow"
+                                   target="_blank">搜狐视频</a>
+                                <a class="btn btn-primary mt-3" href="https://www.pptv.com/" rel="nofollow"
+                                   target="_blank">pptv视频</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row row-grid align-items-center mb-5">
+            <div class="col-lg-6">
+                <h3 class="text-primary font-weight-light mb-2">
+                    欢迎使用弹幕VIP视频解析系统!
+                </h3>
+
+            </div>
+            <div class="col-lg-6 text-lg-center btn-wrapper">
+                <a
+                        target="_blank"
+                        href="https://user.qzone.qq.com/768284730"
+                        class="btn btn-neutral btn-icon-only btn-twitter btn-round btn-lg"
+                        data-toggle="tooltip"
+                        data-original-title="Follow us"
+                >
+                    <i class="fa fa-qq"></i>
+                </a>
+                <!--                <a-->
+                <!--                        target="_blank"-->
+                <!--                        href="https://youtube.com/channel/UCCY24D6Az4xT2XUHpqjHMpg"-->
+                <!--                        class="btn btn-neutral btn-icon-only btn-facebook btn-round btn-lg"-->
+                <!--                        data-toggle="tooltip"-->
+                <!--                        data-original-title="Like us"-->
+                <!--                >-->
+                <!--                    <i class="fa  fa-youtube-play"></i>-->
+                <!--                </a>-->
+                <!--                <a-->
+                <!--                        target="_blank"-->
+                <!--                        href="https://space.bilibili.com/312300240"-->
+                <!--                        class="btn btn-neutral btn-icon-only btn-dribbble btn-lg btn-round"-->
+                <!--                        data-toggle="tooltip"-->
+                <!--                        data-original-title="Follow us"-->
+                <!--                >-->
+                <!--                    <i class="fa fa-dribbble"></i>-->
+                <!--                </a>-->
+                <a
+                        target="_blank"
+                        href="https://github.com/bizhangjie"
+                        class="btn btn-neutral btn-icon-only btn-github btn-round btn-lg"
+                        data-toggle="tooltip"
+                        data-original-title="Star on Github"
+                >
+                    <i class="fa fa-github"></i>
+                </a>
+            </div>
+        </div>
+        <hr/>
+        <div class="row align-items-center justify-content-md-between">
+            <div class="col-md-6">
+                <div class="copyright">
+                    &copy; 2023-2024
+                    <a href="#" target="_blank"
+                    >弹幕VIP视频解析</a
+                    >.
+                </div>
+            </div>
+            <div class="col-md-6">
+                <ul class="nav nav-footer justify-content-end">
+                    <li class="nav-item">
+                        <a
+                                href="http://blog.bizhangjie.top/"
+                                class="nav-link"
+                                target="_blank"
+                        >博客</a
+                        >
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Core -->
+<!--<script id="lfz" src="https://player.liaofuzhan.com/player/player.js" key=1699784080142442498></script>-->
+
+<script>
+
+    // 获取URL中的参数
+    var urlParams = new URLSearchParams(window.location.search);
+    // 设置播放input
+    var urlInput = document.getElementById('url');
+    // 从URL参数中获取值并设置为input元素的值
+    var inputValue = urlParams.get("url");
+    if (inputValue !== null) {
+        urlInput.value = inputValue;
+        dihejk();
+    }
+
+    // 获取输入框元素
+    var showdan_setting_input = document.getElementById("yzmplayer-showdan-setting-input");
+
+    // 添加 onselect 事件处理程序
+    showdan_setting_input.onselect = function () {
+        // 清除已选择的文本
+        document.getSelection().removeAllRanges();
+    };
+</script>
+</body>
+</html>
