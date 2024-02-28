@@ -245,7 +245,7 @@
     // };
 
 
-    // Inside the renderData function
+    // 在 renderData 函数中
     const renderData = (data) => {
         data.forEach(item => {
             const card = document.createElement('div');
@@ -265,7 +265,7 @@
             document.getElementById('loadMoreButton').style.display = 'block';
             container.classList.remove('blurred');
 
-            // Add observer for newly added lazy images
+            // 为新增的 lazy 图像添加观察者
             document.querySelectorAll('.lazy-image').forEach(img => {
                 observer.observe(img);
             });
