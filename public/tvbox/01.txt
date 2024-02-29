@@ -6,7 +6,7 @@
 //https://raw.githubusercontents.com/FongMi/CatVodSpider/main/json/adult.json
 
 {
- "spider":"https://ghproxy.com/https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar;md5;1c0a77c56998f8ac7484678ddb6e91d2",
+ "spider":"https://raw.githubusercontent.com/FongMi/CatVodSpider/main/jar/custom_spider.jar;md5;1c0a77c56998f8ac7484678ddb6e91d2",
 
      "lives": [{"group": "redirect","channels": [{"name": "live","urls": ["proxy://do=live&type=txt&ext=aHR0cHM6Ly9hZ2l0LmFpLzEzODAwMTM4MDAwMC9NSFFUVi9yYXcvYnJhbmNoL21hc3Rlci9UVi8wOTAzemgudHh0"]}]}],
 
