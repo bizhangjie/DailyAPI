@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瓜圈</title>
+    <!-- Include fancyBox CSS and JS files -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+    <!-- DPlayer -->
+    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+    <!-- hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+            margin: 0;
+        }
+
+        #backButton {
+            font-size: 16px;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        #imageContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        a {
+            text-decoration: none;
+            width: calc(25% - 10px);
+            position: relative;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .placeholder {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            color: #555;
+            margin-top: 10px;
+        }
+
+        #loading {
+            display: none;
+            font-size: 18px;
+            color: #777;
+        }
+
+        /* Media Query for screens smaller than 768px */
+        @media (max-width: 768px) {
+            #imageContainer {
+                justify-content: space-around;
+            }
+
+            a {
+                width: calc(50% - 10px);
+            }
+        }
+
+        #idError {
+            color: white;
+            font-size: 16px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f44336;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+
+        #idError.show {
+            display: block;
+        }
+
+        #homeLink {
+            color: white;
+            font-size: 14px;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #videoContainer {
+            margin-top: 20px;
+            width: 80%;
+        }
+
+        #dplayer {
+            max-width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #000;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header">
+    <h1 id="title"></h1>
+    <div id="backButton" onclick="goBack()">返回</div>
+</div>
+
+<div id="loading">
+    正在加载中...
+</div>
+
+<div id="imageContainer"></div>
+
+<div id="videoContainer">
+    <div id="dplayer"></div>
+</div>
+
+<p id="date"></p>
+
+<div id="idError"></div>
+
+<script>
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    function goToHome() {
+        window.location.href = '/weimi';
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var idParameter = getParameterByName('id');
+
+        if (idParameter) {
+            document.getElementById('loading').style.display = 'block';
+
+            fetch('https://api.buxiangyao.link/51cg/detail?uid=' + idParameter)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('imageContainer').style.display = 'flex';
+                    document.getElementById('title').textContent = data.data.title;
+                    document.getElementById('date').textContent = data.data.date;
+
+                    const imageContainer = document.getElementById('imageContainer');
+                    data.data.ImageList.forEach(imageUrl => {
+                        const imgElement = document.createElement('a');
+                        imgElement.href = imageUrl;
+                        imgElement.setAttribute('data-fancybox', 'gallery');
+
+                        const placeholderImg = document.createElement('img');
+                        placeholderImg.src = '../cg/loading.gif';
+                        placeholderImg.classList.add('placeholder');
+                        imgElement.appendChild(placeholderImg);
+
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.onload = function () {
+                            placeholderImg.style.display = 'none';
+                            img.style.display = 'block';
+                        };
+                        img.style.display = 'none';
+                        imgElement.appendChild(img);
+
+                        imageContainer.appendChild(imgElement);
+                    });
+
+                    $('[data-fancybox="gallery"]').fancybox({
+                        loop: true,
+                        buttons: [
+                            "slideShow",
+                            "fullScreen",
+                            "thumbs",
+                            "download",
+                            "close"
+                        ],
+                        backFocus: false,
+                        trapFocus: false,
+                        autoFocus: false,
+                        touch: {
+                            vertical: false,
+                        },
+                        infobar: false,
+                        toolbar: true,
+                        clickContent: false,
+                        clickSlide: false,
+                        clickOutside: true,
+                        dblclickContent: false,
+                        dblclickSlide: false,
+                        dblclickOutside: false,
+                        slideShow: {
+                            autoStart: false,
+                        },
+                        transitionEffect: "slide",
+                        closeButton: true,
+                    });
+
+                    if (data.data.url != '') {
+                        setupDPlayer(data.data.url);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                    document.getElementById('idError').textContent = '数据加载失败，请重试。';
+                    document.getElementById('idError').classList.add('show');
+                    document.getElementById('idError').innerHTML += '<div id="homeLink" onclick="goToHome()">返回首页</div>';
+                });
+        } else {
+            document.getElementById('idError').textContent = '请提供有效的 ID 参数。';
+            document.getElementById('idError').classList.add('show');
+            document.getElementById('idError').innerHTML += '<div id="homeLink" onclick="goToHome()">返回首页</div>';
+        }
+    });
+
+    function setupDPlayer(videoUrl) {
+        const dp = new DPlayer({
+            container: document.getElementById('dplayer'),
+            screenshot: true,
+            video: {
+                url: videoUrl,
+                type: 'hls',
+            },
+        });
+    }
+</script>
+
+</body>
+</html>

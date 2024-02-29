@@ -24,6 +24,8 @@
         }
 
         nav {
+            max-height: calc(90vh - 160px); /* Adjusted max height for navigation */
+            overflow-y: auto; /* Enable vertical scrollbar when content exceeds max height */
             padding: 20px;
         }
 
@@ -68,6 +70,7 @@
             bottom: 0;
             width: 100%;
         }
+
     </style>
 </head>
 <body>
@@ -82,29 +85,42 @@
 
 
 <footer>
-    <p>欢迎使用网站导航</p>
-    <p>一个方便快捷的导航页面，帮助您快速访问常用网站。</p>
+    <!--    <p>欢迎使用网站导航</p>-->
+    <!--    <p>一个方便快捷的导航页面，帮助您快速访问常用网站。</p>-->
     &copy; 2024 网站导航
 </footer>
 
 <script>
+    const host = 'https://api.buxiangyao.link';
     // 模拟从后台获取数据
     const dataFromBackend = [
         {
             category: "搜索引擎", links: [
-                {url: "https://api.buxiangyao.link/J1", name: "91"},
-                {url: "https://api.buxiangyao.link/weimi", name: "维密Q"},
+                {url: host + "/J1", name: "91"},
+                {url: host + "/weimi", name: "维密Q"},
             ]
         },
         {
             category: "直播", links: [
-                {url: "https://api.buxiangyao.link/Zlive", name: "直播秀"},
+                {url: host + "/Zlive", name: "直播秀"},
 
             ]
         },
         {
             category: "解析", links: [
-                {url: "https://api.buxiangyao.link/play", name: "解析秀"},
+                {url: host + "/play", name: "解析秀"},
+            ]
+        },
+        {
+            category: "吃瓜", links: [
+                {url: host + "/cg", name: "01"},
+                {url: host + "/cg/category?typ=mrdg", name: "每日大瓜"},
+                {url: host + "/cg/category?typ=wpac", name: "今日吃瓜"},
+                {url: host + "/cg/category?typ=rdsj", name: "热门吃瓜"},
+                {url: host + "/cg/category?typ=bkdg", name: "必看大瓜"},
+                {url: host + "/cg/category?typ=whhl", name: "网红黑料"},
+                {url: host + "/cg/category?typ=xsxy", name: "学生学校"},
+                {url: host + "/cg/category?typ=whmx", name: "明星黑料"},
             ]
         },
         // 添加更多分类

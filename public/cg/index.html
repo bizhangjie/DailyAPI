@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon"/>
+    <title>吃瓜中心</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #searchBox {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #searchButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #loadingMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1; /* Ensure loading message is on top */
+        }
+
+        #dataContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            filter: blur(0); /* Initial state, not blurred */
+        }
+
+        #dataContainer.blurred {
+            filter: blur(5px); /* Apply blur when data is being fetched */
+            pointer-events: none; /* Make container unselectable while blurred */
+        }
+
+        .card {
+            width: calc(25% - 10px);
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+            position: relative;
+        }
+
+        @media (max-width: 600px) {
+            /* 在屏幕宽度小于或等于 600px 时的样式调整 */
+            .card {
+                width: 48%; /* 每行显示 2 个，每个占据 48% 的宽度，减去 margin 的宽度 */
+            }
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .card-content {
+            padding: 10px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            /*position: absolute;*/
+            bottom: 5px;
+            right: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        a {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        #loadMoreButton {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #noResultCard {
+            width: 100%; /* Full width for the "No Result" card */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            z-index: 1000;
+            display: none; /* Initially hide the card */
+        }
+
+        #noResultCard.show {
+            display: block; /* Show the card when the "show" class is applied */
+        }
+    </style>
+</head>
+<body>
+
+<div id="searchBox">
+    <input type="text" id="searchInput" placeholder="中文搜索..." onkeypress="handleKeyPress(event)">
+    <button id="searchButton" onclick="searchData()">Search</button>
+</div>
+
+<div id="loadingMessage">正在搜索中...</div>
+
+<div id="dataContainer"></div>
+
+<!-- No Result Card -->
+<div id="noResultCard">
+    <p>不好意思，没找到哦，等待更新啊。</p>
+</div>
+
+<button id="loadMoreButton" onclick="loadMoreData()">Load More</button>
+
+<script>
+    const Host = 'https://api.buxiangyao.link/51cg';
+    // const Host = 'https://api.buxiangyao.link/weimiQ/';
+
+    let currentPage = 1;
+    // 创建dataCard
+    const container = document.getElementById('dataContainer');
+    // 默认loadMoreButton不显示
+    document.getElementById('loadMoreButton').style.display = 'none';
+    const fetchData = async (searchTerm, page) => {
+        try {
+            container.classList.add('blurred');
+            showLoadingMessage();
+
+            const response = await fetch(`${Host}/search/?wd=${encodeURIComponent(searchTerm)}&pg=${page}`);
+            const responseData = await response.json();
+            const data = responseData.data;
+
+            if (data.length === 0) {
+                document.getElementById('loadMoreButton').style.display = 'none';
+                // If there's no result, show the "No Result" card
+                document.getElementById('noResultCard').classList.add('show');
+                container.classList.remove('blurred');
+                return;
+            } else {
+                // If there's result, hide the "No Result" card
+                document.getElementById('noResultCard').classList.remove('show');
+                if (page === 1) {
+                    // Clear existing content only for the first page of a new search
+                    clearDataContainer();
+                }
+                renderData(data);
+            }
+
+
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            hideLoadingMessage();
+        }
+    };
+
+    // 使用new Image版本
+    // <!-- 修改 renderData 函数，为 img 元素设置默认 GIF -->
+    // const renderData = (data) => {
+    //     data.forEach(item => {
+    //         const card = document.createElement('div');
+    //         card.classList.add('card');
+    //         card.innerHTML = `
+    //         <div class="card-content">
+    //             <img src="/cg/loading.gif" data-src="${item.img}" alt="${item.title}" onload="loadActualImage(this)">
+    //             <h3>${item.title}</h3>
+    //             <p>Date: ${item.date}</p>
+    //             <a href="/cg/detail?id=${item.aid}" target="_blank">Read more</a>
+    //         </div>
+    //     `;
+    //         container.appendChild(card);
+    //     });
+    //
+    //     setTimeout(() => {
+    //         document.getElementById('loadMoreButton').style.display = 'block';
+    //         container.classList.remove('blurred');
+    //     }, 500);
+    // };
+    //
+    // <!-- 修改 loadActualImage 函数，使用新的 Image 对象加载图片 -->
+    // const loadActualImage = (img) => {
+    //     const actualImage = new Image();
+    //     actualImage.onload = function () {
+    //         img.src = this.src;
+    //     };
+    //     actualImage.src = img.getAttribute('data-src');
+    //     img.removeAttribute('data-src');
+    // };
+
+
+    // 在 renderData 函数中
+    const renderData = (data) => {
+        data.forEach(item => {
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = `
+            <div class="card-content">
+                <img src="/cg/loading.gif" data-src="${item.pic}" alt="${item.title}" class="lazy-image">
+                <h3>${item.title}</h3>
+                <p>Date: ${item.date}</p>
+                <a href="/cg/detail?id=${item.url.split('/')[4]}" target="_blank">Read more</a>
+            </div>
+        `;
+            container.appendChild(card);
+        });
+
+        setTimeout(() => {
+            document.getElementById('loadMoreButton').style.display = 'block';
+            container.classList.remove('blurred');
+
+            // 为新增的 lazy 图像添加观察者
+            document.querySelectorAll('.lazy-image').forEach(img => {
+                observer.observe(img);
+            });
+        }, 500);
+    };
+
+
+    // 使用 IntersectionObserver 来检测图片是否进入视口
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const lazyImage = entry.target;
+                lazyImage.src = lazyImage.getAttribute('data-src');
+                observer.unobserve(lazyImage);
+            }
+        });
+    });
+    const clearDataContainer = () => {
+        document.getElementById('dataContainer').innerHTML = '';
+    };
+
+    const showLoadingMessage = () => {
+        document.getElementById('loadingMessage').style.display = 'block';
+    };
+
+    const hideLoadingMessage = () => {
+        document.getElementById('loadingMessage').style.display = 'none';
+    };
+
+    const searchData = () => {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+
+        if (searchTerm) {
+            showLoadingMessage();
+            currentPage = 1;
+            fetchData(searchTerm, currentPage);
+        } else {
+            // Clear existing content if search term is empty
+            clearDataContainer();
+            document.getElementById('loadMoreButton').style.display = 'none'; // Hide Load More button
+            // Show the "No Result" card
+            document.getElementById('noResultCard').classList.add('show');
+        }
+    };
+
+    const loadMoreData = () => {
+        currentPage++;
+        showLoadingMessage();
+        fetchData(document.getElementById('searchInput').value.trim(), currentPage);
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            searchData();
+        }
+    };
+
+    window.onload = () => {
+        fetchData('', currentPage);
+    };
+</script>
+
+</body>
+</html>
