@@ -408,7 +408,7 @@
             card.innerHTML = `
             <div class="cardContent">
                 <div class="thumbnailContainer">
-                    <img src="${video.vodPic}" alt="${video.vodName}" onclick="openFullScreenPreview('${video.vodPic}','${video.vodName}')">
+                    <img class="lazy-image" src="/jable/loading.gif" data-src="${video.vodPic}" alt="${video.vodName}" onclick="openFullScreenPreview('${video.vodPic}','${video.vodName}')">
                 </div>
                 <h3>${video.vodName}</h3>
                 <a href="${video.vodId}" target="_blank">Watch Video</a>
@@ -421,9 +421,23 @@
         setTimeout(() => {
             videoListContainer.classList.remove('blurred');
             document.getElementById('loadMoreButton').style.display = 'block';
+
+            // 为新增的 lazy 图像添加观察者
+            document.querySelectorAll('.lazy-image').forEach(img => {
+                observer.observe(img);
+            });
         }, 500);
     };
-
+    // 使用 IntersectionObserver 来检测图片是否进入视口
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const lazyImage = entry.target;
+                lazyImage.src = lazyImage.getAttribute('data-src');
+                observer.unobserve(lazyImage);
+            }
+        });
+    });
     function openFullScreenPreview(imageUrl, title) {
         const overlay = document.createElement('div');
         overlay.id = 'fullscreenOverlay';
