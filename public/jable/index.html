@@ -368,6 +368,8 @@
 
 <script>
     const Host = 'https://japi.buxiangyao.link';
+    // const Host = 'http://127.0.0.1:8082';
+
     let currentPage = 1;
     document.getElementById('loadMoreButton').style.display = 'none';
     const videoListContainer = document.getElementById('videoList');
@@ -406,7 +408,7 @@
             card.innerHTML = `
             <div class="cardContent">
                 <div class="thumbnailContainer">
-                    <img src="${video.vodPic}" alt="${video.vodName}" onclick="openFullScreenPreview('${video.vodPic}','${video.vodName}')">
+                    <img src="${ Host + "/image-proxy/?img=" + video.vodPic}" alt="${video.vodName}" onclick="openFullScreenPreview('${Host + "/image-proxy/?img=" + video.vodPic}','${video.vodName}')">
                 </div>
                 <h3>${video.vodName}</h3>
                 <a href="${video.vodId}" target="_blank">Watch Video</a>
