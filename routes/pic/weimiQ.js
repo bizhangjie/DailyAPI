@@ -182,6 +182,27 @@ weimiQRouter.get("/weimiQ/", async (ctx) => {
 
 })
 
+// 图片转码
+weimiQRouter.get("/img", async (ctx) => {
+    const {img} = ctx.query;
+    // 使用正则表达式检查uid是否符合网址格式
+    const urlPattern = /^(?:https?:\/\/)[^\s]+$/;
+    if (!urlPattern.test(img)) {
+        ctx.status = 400; // 返回400错误状态码
+        ctx.body = "Invalid URL"; // 返回错误信息
+        return;
+    }
+
+    // 根据uid的图片，保存图片数据，然后返回给用户
+    const response = await axios.get(img, {
+        responseType: "arraybuffer"
+    });
+    const ImageByte = 'data:image/png;base64,' + btoa(new Uint8Array(response.data).reduce((data, byte) => data + String.fromCharCode(byte), ''))
+    ctx.type = 'image/png';
+    ctx.body = Buffer.from(ImageByte.split(',')[1], 'base64');
+
+})
+
 
 weimiQRouter.info = routerInfo;
 module.exports = weimiQRouter;

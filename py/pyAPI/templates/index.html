@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script rel="script" src="{{ url_for('static', filename='script.js') }}"></script>
+    <title>全网视频播放服务</title>
+</head>
+<body>
+
+<header>
+    <h1>全网视频播放服务</h1>
+</header>
+
+<section>
+    <h2>项目概述</h2>
+    <p>欢迎来到全网视频播放服务项目，我们提供...</p>
+</section>
+
+<section>
+    <h2>主要功能</h2>
+    <ul>
+        <li>功能1：描述功能1</li>
+        <li>功能2：描述功能2</li>
+        <!-- 添加更多功能描述 -->
+    </ul>
+</section>
+
+<section>
+    <h2>资源搜索</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>资源名称</th>
+            <th>搜索链接</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 使用 searchSource 数据填充 -->
+        <script>
+            for (var i = 0; i < searchSource.length; i++) {
+                document.write("<tr>");
+                document.write("<td>" + searchSource[i].name + "</td>");
+                document.write("<td>" + searchSource[i].searchUrl + "</td>");
+                document.write("</tr>");
+            }
+        </script>
+        </tbody>
+    </table>
+</section>
+
+
+<section>
+    <h2>立即开始</h2>
+    <p>注册/登录并开始体验我们的全网视频播放服务！</p>
+    <a href="/register">注册</a> | <a href="/login">登录</a>
+</section>
+
+<footer>
+    <p>&copy; 2024 全网视频播放服务</p>
+</footer>
+
+</body>
+</html>
