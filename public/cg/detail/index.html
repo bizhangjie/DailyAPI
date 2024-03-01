@@ -154,6 +154,9 @@
 <div id="idError"></div>
 
 <script>
+
+    const host = window.location.origin;
+
     function getParameterByName(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
@@ -178,7 +181,7 @@
         if (idParameter) {
             document.getElementById('loading').style.display = 'block';
 
-            fetch('https://api.buxiangyao.link/51cg/detail?uid=' + idParameter)
+            fetch(  `${host}/51cg/detail?uid=` + idParameter)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('loading').style.display = 'none';

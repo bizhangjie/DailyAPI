@@ -977,7 +977,7 @@ function AES_Decrypt(word) {
         try {
             container.classList.add('blurred');
             showLoadingMessage();
-            const url = `http://127.0.0.1:8888/lsp/index`;
+            const url = window.location.origin + `/lsp/index`;
             const response = await fetch(url);
             const responseData = await response.json();
             const data = JSON.parse(AES_Decrypt(responseData.data));

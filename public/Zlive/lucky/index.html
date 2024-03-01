@@ -159,7 +159,7 @@
 <script src="https://jsd.onmicrosoft.cn/npm/dplayer/dist/DPlayer.min.js"></script>
 <script>
     // Make a request to your API
-    fetch(`https://api.buxiangyao.link/zhibo/lucky/1`)
+    fetch(`${window.location.origin}/zhibo/lucky/1`)
         .then(response => response.json())
         .then(data => {
             const apiData = data.data;

@@ -177,7 +177,7 @@
         if (idParameter) {
             document.getElementById('loading').style.display = 'block';
 
-            fetch('https://api.buxiangyao.link/weimiQ/' + idParameter)
+            fetch(window.location.origin + '/weimiQ/' + idParameter)
                 .then(response => response.json())
                 .then(data => {
                     document.getElementById('loading').style.display = 'none';

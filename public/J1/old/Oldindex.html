@@ -187,7 +187,7 @@
     const fetchData = async (searchTerm, page) => {
         try {
             showLoadingMessage();
-            const response = await fetch(`https://api.buxiangyao.link/91/${encodeURIComponent(searchTerm)}/${page}`);
+            const response = await fetch(`${window.location.origin}/91/${encodeURIComponent(searchTerm)}/${page}`);
             const responseData = await response.json();
             const data = responseData.data.data;
 

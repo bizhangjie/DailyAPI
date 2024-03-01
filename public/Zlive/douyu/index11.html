@@ -164,7 +164,7 @@
     if (streamIdMatch && streamIdMatch[1]) {
         const streamId = streamIdMatch[1];
         // Make a request to your API
-        fetch(`https://api.buxiangyao.link/zhibo/douyu/${streamId}`)
+        fetch(`${window.location.origin}/zhibo/douyu/${streamId}`)
             .then(response => response.json())
             .then(data => {
                 const apiData = data.data;

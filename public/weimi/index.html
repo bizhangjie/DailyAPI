@@ -173,6 +173,7 @@
 <button id="loadMoreButton" onclick="loadMoreData()">Load More</button>
 
 <script>
+    const host = window.location.origin;
     let currentPage = 1;
     // 创建dataCard
     const container = document.getElementById('dataContainer');
@@ -183,7 +184,7 @@
             container.classList.add('blurred');
             showLoadingMessage();
 
-            const response = await fetch(`https://api.buxiangyao.link/weimiQ/${encodeURIComponent(searchTerm)}/${page}`);
+            const response = await fetch(`${host}/weimiQ/${encodeURIComponent(searchTerm)}/${page}`);
             const responseData = await response.json();
             const data = responseData.data.data;
 
