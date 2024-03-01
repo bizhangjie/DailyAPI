@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 指定文件夹路径
-const folderPath = '../lsp';
+const folderPath = '../lsp/txt/';
 
 // 获取文件夹下的所有文件
 const files = fs.readdirSync(folderPath);
@@ -28,7 +28,7 @@ files.forEach(file => {
 const mergedContent = fileContents.join('');
 
 // 写入合并后的内容到新文件
-const outputPath = '../lsp/output.txt';
+const outputPath = '../../public/tvbox/slive.txt';
 fs.writeFileSync(outputPath, mergedContent);
 
 console.log(`合并完成，结果已保存到文件：${outputPath}`);

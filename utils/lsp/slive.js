@@ -44,17 +44,21 @@ axios.get(url)
                 .then((zResponse) => {
                     // 将响应数据保存到文件
                     const fileName = `${item.platform}.txt`;
-                    // 处理数据
-                    // 第一步解密
-                    const zdata = JSON.parse(AES_Decrypt(zResponse.data))
-                    // 重新拼接内容
-                    let content = '';
-                    zdata.data.forEach(item => {
-                        const line = `${item.name},${item.rtmp}`
-                        content = content + line + '\n';
-                    })
-                    fs.writeFileSync(fileName, content);
-                    console.log(`数据已保存到文件：${fileName}`);
+                    if (!fileName.includes('小红帽')) {
+                        // 处理数据
+                        // 第一步解密
+                        const zdata = JSON.parse(AES_Decrypt(zResponse.data))
+                        // 重新拼接内容
+                        let content = '';
+                        zdata.data.forEach(item => {
+                            const line = `${item.name},${item.rtmp}`
+                            content = content + line + '\n';
+                        })
+                        fs.writeFileSync("../lsp/txt/" + fileName, content);
+                        console.log(`数据已保存到文件：${fileName}`);
+                    }else{
+                        console.log(`跳过 =》 ${item.platform}`)
+                    }
                 })
                 .catch((zError) => {
                     console.log(`请求子url时发生错误：${zError}`);

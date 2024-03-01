@@ -8,7 +8,7 @@ node_modules/
 testDemo/
 
 # 忽略utils/lsp下的所有 .txt 文件
-utils/lsp/
+utils/lsp/txt
 
 # 忽略特定文件
 secret.txt

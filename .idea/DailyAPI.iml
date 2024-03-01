@@ -8,6 +8,7 @@
       <excludeFolder url="file://$MODULE_DIR$/routes/search" />
       <excludeFolder url="file://$MODULE_DIR$/routes/video" />
       <excludeFolder url="file://$MODULE_DIR$/testDemo" />
+      <excludeFolder url="file://$MODULE_DIR$/utils/lsp/txt" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (Api_Video)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
