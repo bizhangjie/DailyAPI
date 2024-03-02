@@ -191,8 +191,10 @@
     const container = document.getElementById('dataContainer');
     // 默认loadMoreButton不显示
     var typ = getParameterByName('typ');
+
     document.getElementById('loadMoreButton').style.display = 'none';
-    const fetchData = async (searchTerm, page) => {
+
+    const fetchData = async (page) => {
         try {
             container.classList.add('blurred');
             showLoadingMessage();
@@ -293,7 +295,7 @@
     const loadMoreData = () => {
         currentPage++;
         showLoadingMessage();
-        fetchData(document.getElementById('searchInput').value.trim(), currentPage);
+        fetchData(currentPage);
     };
 
     const handleKeyPress = (event) => {
@@ -303,7 +305,7 @@
     };
 
     window.onload = () => {
-        fetchData('', currentPage);
+        fetchData(currentPage);
     };
 </script>
 

@@ -75,6 +75,9 @@ registerRoutes(__dirname + "/story", router, allRouterInfo);
 // 遍历proxy文件夹下的所有路由模块
 registerRoutes(__dirname + "/proxy", router, allRouterInfo);
 
+// 遍历scheduleJob文件夹下的所有路由模块
+registerRoutes(__dirname + "/scheduleJob", router, allRouterInfo);
+
 // 全部接口路由
 router.get("/all", async (ctx) => {
     console.log("获取全部接口路由");
