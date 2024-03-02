@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon"/>
+    <title>18+密</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        #videoList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding-top: 60px; /* 添加 padding-top，确保内容不被导航头遮挡 */
+        }
+
+        .videoCard {
+            width: 25%; /* 每行显示 4 个，每个占据 25% 的宽度 */
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+            position: relative;
+        }
+
+        @media (max-width: 600px) {
+            /* 在屏幕宽度小于或等于 600px 时的样式调整 */
+            .videoCard {
+                width: 48%; /* 每行显示 2 个，每个占据 48% 的宽度，减去 margin 的宽度 */
+            }
+        }
+
+        .videoCard:hover {
+            transform: scale(1.05);
+        }
+
+        .videoCard img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 图片充满容器并保持纵横比 */
+        }
+
+        .cardContent {
+            position: relative;
+            padding: 10px;
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        a {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 14px;
+            text-align: center;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+
+        /*新搜索*/
+        /* 新添加的样式，用于导航头 */
+        #header {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000; /* 设定一个较大的 z-index */
+            /*background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff); !* 彩色背景渐变 *!*/
+            background: linear-gradient(to right, #ff8a00, #e52e71, #6610f2); /* 修改颜色值 */
+        }
+
+        #searchBox {
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        #searchInput {
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        #searchButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+
+        /*加载更多*/
+        #loadingMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1; /* Ensure loading message is on top */
+        }
+
+        #loadMoreButton {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        /* 新添加的悬浮 div 样式 */
+        #floatingButtonsContainer {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            display: none; /* 默认隐藏悬浮 div */
+        }
+
+        #floatingButtonsContainer button {
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            padding: 8px 16px;
+            border: none;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        #floatingButtonsContainer button:last-child {
+            margin-right: 0; /* 移除最后一个按钮的右边距 */
+        }
+
+        #floatingButtonsContainer button:hover {
+            background-color: #0056b3;
+        }
+
+        /* 新添加的悬浮播放器样式 */
+        .playButton {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #videoPlayerContainer {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 66%; /* Adjust the width as needed */
+            max-width: 800px; /* Set a maximum width if desired */
+            height: 66vh; /* Adjust the height as needed */
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 2; /* Ensure video player is on top of other elements */
+        }
+
+        #closeVideoButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 3; /* Ensure close button is on top of the video player */
+        }
+
+
+        #dplayer {
+            height: 100%;
+        }
+
+        /* 新添加的样式，用于背景虚化 */
+        .blurred-bg {
+            filter: blur(5px); /* 调整模糊程度 */
+            pointer-events: none; /* 使虚化的区域不响应鼠标事件 */
+        }
+    </style>
+
+    <style>
+        #fullscreenOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #fullscreenContent {
+            max-width: 80%;
+            max-height: 80%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #fullscreenContent img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        #fullscreenContent span {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+    </style>
+
+    <!-- DPlayer -->
+    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+    <!-- hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+    <style>
+        /* 新添加的样式规则 */
+        #historyContainer {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            width: 24%; /* 占右侧 1/4 的宽度 */
+            max-height: 200px; /* 最大高度，可以根据需要调整 */
+            overflow-y: auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        #historyButton {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .historyItem {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .leftContent {
+            flex: 1;
+        }
+
+        .reviewButton {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+<!--<div id="searchBox">-->
+<!--    <input type="text" id="searchInput" placeholder="中文搜索..." onkeypress="handleKeyPress(event)">-->
+<!--    <button id="searchButton" onclick="searchData()">Search</button>-->
+<!--</div>-->
+
+<!-- 导航头部分 -->
+<!-- 新添加的导航头 -->
+<div id="header">
+    <!-- 左侧：搜索框 -->
+    <div id="searchBox">
+        <input type="text" id="searchInput" placeholder="中文搜索..." onkeypress="handleKeyPress(event)">
+        <button id="searchButton" onclick="searchData()">Search</button>
+    </div>
+
+    <!-- 右侧：历史按钮 -->
+    <button id="historyButton" onclick="showHistory()">History</button>
+
+    <!-- 新添加的播放历史容器 -->
+    <div id="historyContainer">
+        <div id="historyContent">
+            <!-- 这里可以显示播放历史的内容 -->
+            <!-- 暂时留空 -->
+        </div>
+    </div>
+</div>
+
+<div id="loadingMessage">正在搜索中...</div>
+<div id="videoList"></div>
+<button id="loadMoreButton" onclick="loadMoreData()">Load More</button>
+
+<!-- 在 body 元素末尾添加悬浮的 div -->
+<div id="floatingButtonsContainer">
+    <button onclick="scrollToTopSmooth()">Top</button>
+    <!--    <button onclick="onNextPage()">Next</button>-->
+</div>
+
+<!-- 新的悬浮播放器容器 -->
+<div id="videoPlayerContainer">
+    <!-- 关闭按钮 -->
+    <button id="closeVideoButton" onclick="closeVideoPlayer()">Close</button>
+    <!-- DPlayer容器 -->
+    <div id="dplayer"></div>
+</div>
+
+<script>
+    const Host = 'https://japi.buxiangyao.link';
+    // const Host = 'http://127.0.0.1:8082';
+
+    let currentPage = 1;
+    document.getElementById('loadMoreButton').style.display = 'none';
+    const videoListContainer = document.getElementById('videoList');
+    // 异步搜索请求获取data
+    const fetchData = async (searchTerm, page) => {
+        try {
+            showLoadingMessage();
+            const response = await fetch(`${Host}/spankbang/search/${encodeURIComponent(searchTerm)}/${page}`);
+            const responseData = await response.json();
+            const data = responseData;
+
+            if (data.length === 0) {
+                document.getElementById('loadMoreButton').style.display = 'none';
+            } else {
+                document.getElementById('loadMoreButton').style.display = 'block';
+            }
+
+            if (page === 1) {
+                clearDataContainer();
+            }
+
+            renderData(data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            hideLoadingMessage();
+        }
+    };
+    // 渲染数据到html中
+    const renderData = (data) => {
+        videoListContainer.classList.add('blurred');
+
+        data.forEach(video => {
+            const card = document.createElement('div');
+            card.classList.add('videoCard');
+            card.innerHTML = `
+            <div class="cardContent">
+                <div class="thumbnailContainer">
+                    <img class="lazy-image" src="/spankbang/loading.gif" data-src="${video.vodPic}" alt="${video.vodName}" onclick="openFullScreenPreview('${video.vodPic}','${video.vodName}')">
+                </div>
+                <h3>${video.vodName}</h3>
+                <a href="${video.vodId}" target="_blank">Watch Video</a>
+                <button class="playButton" onclick="openVideoPlayer('${video.vodId}','${video.vodName}')">Play</button>
+            </div>
+        `;
+            videoListContainer.appendChild(card);
+        });
+
+        setTimeout(() => {
+            videoListContainer.classList.remove('blurred');
+            document.getElementById('loadMoreButton').style.display = 'block';
+
+            // 为新增的 lazy 图像添加观察者
+            document.querySelectorAll('.lazy-image').forEach(img => {
+                observer.observe(img);
+            });
+        }, 500);
+    };
+    // 使用 IntersectionObserver 来检测图片是否进入视口
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const lazyImage = entry.target;
+                lazyImage.src = lazyImage.getAttribute('data-src');
+                observer.unobserve(lazyImage);
+            }
+        });
+    });
+    function openFullScreenPreview(imageUrl, title) {
+        const overlay = document.createElement('div');
+        overlay.id = 'fullscreenOverlay';
+        overlay.innerHTML = `
+        <div id="fullscreenContent">
+            <img src="${imageUrl}" alt="${title}">
+            <span onclick="closeFullScreenPreview()">Close</span>
+        </div>
+    `;
+        document.body.appendChild(overlay);
+    }
+
+    function closeFullScreenPreview() {
+        const overlay = document.getElementById('fullscreenOverlay');
+        if (overlay) {
+            overlay.remove();
+        }
+    }
+
+    const clearDataContainer = () => {
+        videoListContainer.innerHTML = '';
+    };
+
+    const showLoadingMessage = () => {
+        document.getElementById('loadingMessage').style.display = 'block';
+    };
+
+    const hideLoadingMessage = () => {
+        document.getElementById('loadingMessage').style.display = 'none';
+    };
+    // 搜索框代码
+    const searchData = () => {
+        const searchTerm = document.getElementById('searchInput').value.trim();
+
+        if (searchTerm) {
+            showLoadingMessage();
+            currentPage = 1;
+            document.getElementById('loadMoreButton').style.display = 'block';
+            fetchData(searchTerm, currentPage);
+        } else {
+            alert('请输入搜索关键字！');
+        }
+    };
+
+    const loadMoreData = () => {
+        currentPage++;
+        showLoadingMessage();
+        fetchData(document.getElementById('searchInput').value.trim(), currentPage);
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            searchData();
+        }
+    };
+
+    window.onload = () => {
+        fetchData('', currentPage);
+    };
+
+    window.onscroll = () => {
+        const container = document.getElementById('floatingButtonsContainer');
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+            container.style.display = 'flex';
+        } else {
+            container.style.display = 'none';
+        }
+    };
+</script>
+<!--返回顶部代码-->
+<script>
+    const scrollToTopSmooth = () => {
+        const scrollToTop = () => {
+            const currentScroll = document.documentElement.scrollTop || document.body.scrollTop;
+
+            if (currentScroll > 0) {
+                const scrollStep = Math.ceil(currentScroll / 20);
+                document.documentElement.scrollTop -= scrollStep;
+                document.body.scrollTop -= scrollStep;
+
+                requestAnimationFrame(scrollToTop);
+            }
+        };
+
+        scrollToTop();
+    };
+
+    const onNextPage = () => {
+        loadMoreData();
+        const topOfNewContent = document.getElementById('videoList').offsetTop;
+        window.scrollTo({top: topOfNewContent, behavior: 'smooth'});
+    };
+</script>
+<!--悬浮视频代码-->
+<script>
+    const openVideoPlayer = async (videoUrl, videoTitle) => {
+        try {
+            showLoadingMessage();
+            let realVideoUrl;
+            // 保存播放历史记录
+            const timestamp = Date.now();
+            // 判断是否是直接播放地址
+            if (!videoUrl.includes('m3u8')) {
+                // 发起异步请求获取真实的视频播放地址
+                const response = await fetch(`${Host}/spankbang/play?uid=` + videoUrl);
+                const responseData = await response.json();
+                realVideoUrl = responseData.contentUrl;
+                console.log("realVideoUrl:", realVideoUrl)
+            } else {
+                realVideoUrl = videoUrl;
+            }
+            saveHistory(videoTitle, realVideoUrl, timestamp);
+            // 添加背景虚化类
+            document.getElementById('videoList').classList.add('blurred-bg');
+            document.getElementById('floatingButtonsContainer').classList.add('blurred-bg');
+            const dp = new DPlayer({
+                container: document.getElementById('dplayer'),
+                video: {
+                    url: realVideoUrl,
+                    type: 'normal',
+                },
+            });
+
+            document.getElementById('videoPlayerContainer').style.display = 'block';
+        } catch (error) {
+            console.error('Error fetching real video URL:', error);
+        } finally {
+            hideLoadingMessage();
+        }
+    };
+
+
+    const closeVideoPlayer = () => {
+        document.getElementById('dplayer').innerHTML = ''; // Remove DPlayer instance
+        document.getElementById('videoPlayerContainer').style.display = 'none';
+
+        // 移除背景虚化类
+        document.getElementById('videoList').classList.remove('blurred-bg');
+        document.getElementById('floatingButtonsContainer').classList.remove('blurred-bg');
+    };
+</script>
+<!--显示历史功能-->
+<script>
+    // 新增一个变量用于保存历史 div 的显示状态
+    let isHistoryContainerVisible = false;
+
+    // 获取或初始化播放历史记录
+    const getHistory = () => {
+        const historyString = localStorage.getItem('playHistory');
+        return historyString ? JSON.parse(historyString) : [];
+    };
+
+    // 保存播放历史记录
+    const saveHistory = (title, url, timestamp) => {
+        const history = getHistory();
+
+        // 查找是否存在相同的 url
+        const existingIndex = history.findIndex(item => item.url === url);
+
+        if (existingIndex !== -1) {
+            // 更新时间戳和播放次数
+            const playCount = (history[existingIndex]?.playCount || 0) + 1;
+            // 先保存，再删除旧历史记录
+            history.splice(existingIndex, 1);
+            history.unshift({title, url, timestamp, playCount})
+        } else {
+            // 如果不存在相同的 title，添加新的历史记录到最前面
+            history.unshift({title, url, timestamp, playCount: 1});
+        }
+
+        console.log("保存数据 => " + title + " url => " + url + "  time => " + timestamp + " 播放次数 => " + history[existingIndex]?.playCount);
+        localStorage.setItem('playHistory', JSON.stringify(history));
+    };
+
+
+    // 显示播放历史
+    // 点击 History 按钮显示或隐藏历史 div
+    const showHistory = () => {
+        console.log("点击了历史按钮");
+        const historyContainer = document.getElementById('historyContainer');
+        isHistoryContainerVisible = !isHistoryContainerVisible;
+
+        const history = getHistory();
+        console.log(history);
+
+        // 清空历史内容
+        historyContainer.innerHTML = '';
+
+        // 显示历史记录
+        history.forEach(item => {
+            const historyItem = document.createElement('div');
+            historyItem.classList.add('historyItem');
+            // 左侧显示标题和最近观看时间
+            const leftContent = document.createElement('div');
+            leftContent.classList.add('leftContent');
+            leftContent.innerHTML = `
+            <p>Title: ${item.title}</p>
+            <p>Last Watched: ${new Date(item.timestamp).toLocaleString()}</p>
+        `;
+            historyItem.appendChild(leftContent);
+
+            // 右侧添加回顾按钮
+            const reviewButton = document.createElement('button');
+            reviewButton.classList.add('reviewButton');
+            reviewButton.textContent = '回顾';
+            // 为按钮添加点击事件，调用 openVideoPlayer 函数播放视频
+            reviewButton.addEventListener('click', () => {
+                openVideoPlayer(item.url, item.title);
+            });
+
+            historyItem.appendChild(reviewButton);
+            historyContainer.appendChild(historyItem);
+        });
+
+        if (isHistoryContainerVisible) {
+            historyContainer.style.display = 'block';
+            console.log("显示");
+            // 添加点击事件监听器
+            document.addEventListener('click', closeHistoryOnClickOutside);
+        } else {
+            historyContainer.style.display = 'none';
+            // 移除点击事件监听器
+            document.removeEventListener('click', closeHistoryOnClickOutside);
+        }
+    };
+
+    // 点击历史 div 以外的区域关闭历史 div
+    const closeHistoryOnClickOutside = (event) => {
+        const historyContainer = document.getElementById('historyContainer');
+        const historyButton = document.getElementById('historyButton');
+        // 检查点击的区域是否在历史 div 之外
+        if (!historyContainer.contains(event.target) && !historyButton.contains(event.target)) {
+            isHistoryContainerVisible = false;
+            historyContainer.style.display = 'none';
+            // 移除点击事件监听器
+            document.removeEventListener('click', closeHistoryOnClickOutside);
+        }
+    };
+
+</script>
+</body>
+</html>
