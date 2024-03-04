@@ -31,6 +31,7 @@ async function getDouyinUrl(rid, stream) {
 
   // Build URL for final request
   const url = `https://live.douyin.com/webcast/room/web/enter/?aid=6383&app_name=douyin_web&live_id=1&device_platform=web&language=zh-CN&enter_from=web_live&cookie_enabled=true&screen_width=1728&screen_height=1117&browser_language=zh-CN&browser_platform=MacIntel&browser_name=Chrome&browser_version=116.0.0.0&web_rid=${rid}`;
+  // https://www.douyin.com/webcast/web/feed/follow/?device_platform=webapp&aid=6383&channel=channel_pc_web&scene=aweme_pc_follow_top&pc_client_type=1&version_code=170400&version_name=17.4.0&cookie_enabled=true&screen_width=1536&screen_height=864&browser_language=zh-CN&browser_platform=Win32&browser_name=Chrome&browser_version=98.0.4758.139&browser_online=true&engine_name=Blink&engine_version=98.0.4758.139&os_name=Windows&os_version=10&cpu_core_num=12&device_memory=8&platform=PC&downlink=1.25&effective_type=3g&round_trip_time=450&webid=7287126164497139200&msToken=qj6GodBzybs7zNbpwlhdA6IZyMaNNgWi8WgaJDwGUweWTCmfl4tEvq2zgjEdJtDzw3MK4XDFYsE0iVOvQy_m6rKJPXk-yNS7uoWYXH9qLGdfN3H8MHF286gxV8f7&X-Bogus=DFSzswVY5XiANjSZtbkASe9WX7jo
   const finalHeaders = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
     'Cookie': ttwid,
