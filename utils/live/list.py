@@ -147,5 +147,5 @@ for item in data['data']['data']:
 with open('douyin0.txt', 'w', encoding='utf-8') as f:
     f.write("💘斗音,#genre#\n")
     for item in listData:
-        f.write(f"{item['title']},{item['rid']}\n")
+        f.write(f"{item['title']},https://api.buxiangyao.link/douyin/{item['rid']}\n")
 print("保存成功")
