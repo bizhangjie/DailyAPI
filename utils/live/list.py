@@ -135,7 +135,7 @@ for item in data['data']['data']:
     stream_url = room['stream_url']['flv_pull_url']['FULL_HD1']
     listData.append({
         'rid': rid,
-        'title': title,
+        'title': title.replace('#',''),
         'avatar_thumb': avatar_thumb,
         'nickname': nickname,
         'stream_url': stream_url
@@ -144,7 +144,7 @@ for item in data['data']['data']:
 # print(listData)
 
 # 保存数据到txt
-with open('douyin.txt', 'w', encoding='utf-8') as f:
+with open('douyin0.txt', 'w', encoding='utf-8') as f:
     f.write("💘斗音,#genre#\n")
     for item in listData:
         f.write(f"{item['title']},{item['rid']}\n")
