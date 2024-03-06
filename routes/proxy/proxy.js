@@ -9,15 +9,18 @@ const cacheKey = "proxyData";
 
 // 播放地址
 proxyRouter.get("/proxy", async (ctx) => {
-    const { url } = ctx.query;
-    const key = `${cacheKey}_${url}`;
+    const { url,wd,pg } = ctx.query;
+    let zURl = url;
+    if (wd != '' || pg != ''){
+        zURl = `${url}?ac=videolist&wd=${wd}&pg=${pg}`;
+    }
+    const key = `${cacheKey}_${zURl}`;
     try {
         // 从缓存中获取数据
         let data = await get(key);
         if (!data) {
             // 从服务器拉取数据
-            const res = await axios.get(url, { responseType: 'arraybuffer' });
-
+            const res = await axios.get(zURl, { responseType: 'arraybuffer' });
             // Check if the content type is an image
             const contentType = res.headers['content-type'];
             if (contentType && contentType.startsWith('image/')) {
@@ -43,5 +46,6 @@ proxyRouter.get("/proxy", async (ctx) => {
         response(ctx, 606, "", "此类数据有毒，但是很好看！");
     }
 });
+
 
 module.exports = proxyRouter;
