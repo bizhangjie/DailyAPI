@@ -170,6 +170,14 @@
       "filterable": 1
     },
     {
+      "key": "J91",
+      "name": "J91",
+      "type": 3,
+      "api": "csp_J91",
+      "searchable": 1,
+      "filterable": 1
+    },
+    {
       "key": "Supjav",
       "name": "Supjav",
       "type": 3,
