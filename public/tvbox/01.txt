@@ -178,6 +178,14 @@
       "filterable": 1
     },
     {
+      "key": "Cg51",
+      "name": "Cg51",
+      "type": 3,
+      "api": "csp_Cg51",
+      "searchable": 1,
+      "filterable": 1
+    },
+    {
       "key": "Supjav",
       "name": "Supjav",
       "type": 3,
