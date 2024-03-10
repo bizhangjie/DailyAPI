@@ -7,6 +7,10 @@ node_modules/
 # 忽略测试文件夹
 testDemo/
 
+py/
+
+html/
+
 # 忽略utils/lsp下的所有 .txt 文件
 utils/lsp/txt
 
