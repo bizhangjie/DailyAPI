@@ -146,27 +146,45 @@
       "searchable": 1,
       "filterable": 1
     },
-    {'key': '百度', 'name': '百度', 'type': 1, 'api': 'https://api.apibdzy.com/api.php/provide/vod?ac=list', 'searchable': 1, 'filterable': 0,
-     'categories': ['国产动漫', '日韩动漫', '大陆剧', '欧美剧', '韩剧', '日剧', '动作片', '喜剧片', '爱情片', '科幻片', '恐怖片', '剧情片', '战争片']},
-     {'key': 'bttcj.com', 'name': '成人04', 'type': 0, 'api': 'http://bttcj.com/inc/sapi.php', 'quickSearch': 1, 'searchable': 1,
-     'filterable': 1}, {'key': 'wmcj8.com', 'name': '成人07', 'type': 0, 'api': 'http://wmcj8.com/inc/sapi.php', 'quickSearch': 1,
-     'searchable': 1, 'filterable': 1}, {'key': 'dadiapi.com', 'name': '成人09', 'type': 0, 'api': 'http://dadiapi.com/api.php',
-     'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'llzxcj.com', 'name': '成人15', 'type': 0, 'api': 'http://llzxcj.com/inc/sck
-     .php?ac=videolist', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'f2dcj6.com', 'name': '成人18', 'type': 0, 'api':
-     'http://f2dcj6.com/sapi?ac=videolist', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'feifei67.com', 'name': '成人22',
-     'type': 1, 'api': 'http://www.feifei67.com/api.php/provide/vod/', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key':
-     'api.11bat.com', 'name': '成人30', 'type': 0, 'api': 'http://api.11bat.com/api.php/provide/vod/at/xml', 'quickSearch': 1, 'searchable':
-     1, 'filterable': 1}, {'key': 'api.maozyapi.com', 'name': '成人32', 'type': 1, 'api': 'https://api.maozyapi.com/inc/apijson_vod.php',
-     'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'gdlsp.com', 'name': '成人36', 'type': 0, 'api': 'https://www.gdlsp
-     .com/api/xml.php', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'kxgav.com', 'name': '成人44', 'type': 0, 'api':
-     'https://www.kxgav.com/api/xml.php', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'msnii.com', 'name': '成人46', 'type':
-     0, 'api': 'https://www.msnii.com/api/xml.php', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'apittzy.com', 'name': '成人
-     47', 'type': 1, 'api': 'https://apittzy.com/api.php/provide/vod/', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key':
-     lbapi9.com', 'name': '成人50', 'type': 1, 'api': 'https://lbapi9.com/api.php/provide/vod/', 'quickSearch': 1, 'searchable': 1,
-     'filterable': 1}, {'key': 'kkzy.me', 'name': '成人51', 'type': 1, 'api': 'https://kkzy.me/api.php/provide/vod/', 'quickSearch': 1,
-     'searchable': 1, 'filterable': 1}, {'key': 'xrbsp.com', 'name': '成人66', 'type': 0, 'api': 'https://www.xrbsp.com/api/xml.php',
-     'quickSearch': 1, 'searchable': 1, 'filterable': 1}, {'key': 'api.apilyzy.com', 'name': '成人71', 'type': 1, 'api': 'https://api.apilyzy
-     .com/api.php/provide/vod/', 'quickSearch': 1, 'searchable': 1, 'filterable': 1}
+    {"key": "百度", 
+    "name": "百度", 
+    "type": 1, 
+    "api": "https://api.apibdzy.com/api.php/provide/vod?ac=list",
+     "searchable": 1,
+      "filterable": 0,
+     "categories": ["国产动漫", "日韩动漫", "大陆剧", "欧美剧", "韩剧", "日剧", "动作片", "喜剧片", "爱情片", "科幻片", "恐怖片", "剧情片", "战争片"]},
+     {"key": "bttcj.com", "name": "成人04", "type": 0,
+      "api": "http://bttcj.com/inc/sapi.php",
+       "quickSearch": 1, "searchable": 1,
+     "filterable": 1},
+     {"key": "wmcj8.com", "name": "成人07", "type": 0, "api": "http://wmcj8.com/inc/sapi.php", "quickSearch": 1,
+     "searchable": 1, "filterable": 1},
+      {"key": "dadiapi.com", "name": "成人09", "type": 0, "api": "http://dadiapi.com/api.php",
+     "quickSearch": 1, "searchable": 1, "filterable": 1},
+     {"key": "llzxcj.com", "name": "成人15", "type": 0,
+     "api": "http://llzxcj.com/inc/sck.php?ac=videolist", "quickSearch": 1, "searchable": 1, "filterable": 1},
+     {"key": "f2dcj6.com", "name": "成人18", "type": 0, "api":"http://f2dcj6.com/sapi?ac=videolist", "quickSearch": 1, "searchable": 1, "filterable": 1},
+      {"key": "feifei67.com", "name": "成人22",
+     "type": 1, "api": "http://www.feifei67.com/api.php/provide/vod/", "quickSearch": 1, "searchable": 1, "filterable": 1},
+     {"key":
+     "api.11bat.com", "name": "成人30", "type": 0, "api": "http://api.11bat.com/api.php/provide/vod/at/xml", "quickSearch": 1, "searchable":
+     1, "filterable": 1},
+     {"key": "api.maozyapi.com", "name": "成人32", "type": 1, "api": "https://api.maozyapi.com/inc/apijson_vod.php",
+     "quickSearch": 1, "searchable": 1, "filterable": 1},
+     {"key": "gdlsp.com", "name": "成人36", "type": 0, "api": "https://www.gdlsp.com/api/xml.php", "quickSearch": 1, "searchable": 1, "filterable": 1},
+      {"key": "kxgav.com", "name": "成人44", "type": 0, "api":
+     "https://www.kxgav.com/api/xml.php", "quickSearch": 1, "searchable": 1, "filterable": 1},
+     {"key": "msnii.com", "name": "成人46", "type":
+     0, "api": "https://www.msnii.com/api/xml.php", "quickSearch": 1, "searchable": 1, "filterable": 1},
+      {"key": "apittzy.com", "name": "成人47", "type": 1, "api": "https://apittzy.com/api.php/provide/vod/", "quickSearch": 1, "searchable": 1, "filterable": 1},
+      {"key":"lbapi9.com", "name": "成人50", "type": 1, "api": "https://lbapi9.com/api.php/provide/vod/", "quickSearch": 1, "searchable": 1,
+     "filterable": 1},
+      {"key": "kkzy.me", "name": "成人51", "type": 1, "api": "https://kkzy.me/api.php/provide/vod/", "quickSearch": 1,
+     "searchable": 1, "filterable": 1},
+     {"key": "xrbsp.com", "name": "成人66", "type": 0, "api": "https://www.xrbsp.com/api/xml.php",
+     "quickSearch": 1, "searchable": 1, "filterable": 1},
+     {"key": "api.apilyzy.com", "name": "成人71", "type": 1, "api": "https://api.apilyzy.com/api.php/provide/vod/", "quickSearch": 1,
+     "searchable": 1, "filterable": 1},
     {
       "key": "push_agent",
       "name": "推送",
