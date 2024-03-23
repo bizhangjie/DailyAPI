@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+     <!-- DPlayer -->
+    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
+    <!-- hls.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+</head>
+<body>
+<div id="dplayer"></div>
+<script>
+    var dp = new DPlayer({
+        container: document.getElementById('dplayer'),
+        video: {
+            url: 'https://dl-a10b-0862.mypikpak.com/download/?fid=FcZzccWOgnCEzZC5awHCODbM8DIevBZhXmX4kDlmm0payNmzEp8lpYPjo6ySg9i0y2Le8bDPJGqlzUw2VoVJ3mDoZzT-vUu_tJ2oJhKlEDU=&from=5&verno=3&prod=1104&expire=1711280142&g=93703146AB3A47E749BF038E87E75F5F86AF7CA6&ui=Zf6Jf4oYTyq9pE8a&t=0&ms=10400000&th=10400000&f=11259577342&alt=0&userid=Zf6Jf4oYTyq9pE8a&fileid=VNteHrkJ9tRwMaWlop_jSHdzo1&pr=XQPkPvr9WWiIuMvELmrVeuIjlQ81OKP8r8N6_ySxu2XnX3pNHTqzPe1vC8mmVWN7yZ5ewirFAL5PS483W-tSmHLAOC_UvU-UIL3uy-2FEjf3ioCIPNsWDqQetSLAnXAkJ1b9imgiT3yU1FXF7figjwSwMTUQMLY7hNudRkJ0P4pUCYp4uTpHZvMP5-RX0f5GMrj0u_xpcW1zOgf550o1BF74lRtPQn0JuQGfC9JFntFUA7oj4n_o3MFi_eM1J6fXdwZ8XZnVJRFG3sDoqafSAMVAb4dRca0VAc_gYyFUgI33K7Td-dGLs_-kICRG2BGFNN7BDY8KzpYD7AnlTXNAjugPkX5c-U6biI_ym9ZTSSxg6Gc0_r1Lv7SdqCYSpRA1&sign=B51CA38B5F01F2F71FBBE846DEA74195', // 替换为你的视频 URL
+        },
+    });
+</script>
+</body>
+</html>
