@@ -1,31 +1,108 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <!-- DPlayer -->
-    <script src="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.js"></script>
-    <!-- hls.js -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer/dist/DPlayer.min.css">
+    <meta charset="utf-8">
+    <meta name=viewport
+          content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
+    <meta name="referrer" content="no-referrer">
+    <title>xgplayer</title>
+    <style type="text/css">
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
-<div id="dplayer" style="width: 800px; height: 450px;"></div>
+<div id="mse"></div>
+<script src="//unpkg.byted-static.com/xgplayer/2.31.6/browser/index.js" charset="utf-8"></script>
+<script src="//unpkg.byted-static.com/xgplayer-hls.js/2.2.2/browser/index.js" charset="utf-8"></script>
 <script>
-    var dp = new DPlayer({
-        container: document.getElementById('dplayer'),
-        video: {
-            url: 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF%26%E5%AD%97%E5%B9%95%26m3u8/2.23/20240223_221612.m3u8', // 替换为你的视频 URL
-            type: 'hls',
+    let player = new HlsJsPlayer({
+        "id": "mse",
+        "playsinline": true,
+        "whitelist": [
+            ""
+        ],
+        "nativeTextTrack": [
+            {
+                "src": "https://api.buxiangyao.link/play/20240223_221612 (1).vtt",
+                "label": "字幕1",
+                "default": true
+            }
+        ],
+        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF&字幕&m3u8/2.23/20240223_221612.m3u8",
+        "pip": true,
+        "screenShot": true,
+        // 最小播放器
+        "thumbnail": {
+            "pic_num": 44,
+            "width": 160,
+            "height": 90,
+            "col": 10,
+            "row": 10,
+            "urls": [
+                ""
+            ]
         },
-        subtitle: {
-            url: 'http://localhost:63342/DailyAPI/public/play/itutool_1711511584.vtt',
-            type: 'webvtt',
-            fontSize: '25px',
-            bottom: '10%',
-            color: '#b7daff',
+        // 播放倍数
+        "playbackRate": [
+            0.5,
+            1,
+            2,
+            4,
+            8
+        ],
+        "keyShortcut": "on",
+        "danmu": {
+            "comments": [
+                {
+                    "duration": 15000,
+                    "id": "2",
+                    "start": 3000,
+                    "txt": "长弹幕长弹幕长弹幕",
+                    "mode": "top"
+                },
+                {
+                    "duration": 15000,
+                    "id": "3",
+                    "start": 4000,
+                    "txt": "长弹幕长弹幕长弹幕",
+                    "mode": "bottom"
+                },
+                {
+                    "duration": 15000,
+                    "id": "4",
+                    "start": 5000,
+                    "txt": "长弹幕长弹幕长弹幕",
+                    "mode": "scroll"
+                },
+                {
+                    "duration": 15000,
+                    "id": "5",
+                    "start": 8000,
+                    "txt": "长弹幕长弹幕长弹幕",
+                    "mode": "scroll"
+                }
+            ],
+            "area": {
+                "start": 0,
+                "end": 1
+            },
+            "closeDefaultBtn": false,
+            "defaultOff": false,
+            "panel": true
         },
+        // 封面
+        "poster": "https://github.com/niucnet/jinricp/blob/main/GIF&%E5%AD%97%E5%B9%95&m3u8/2.23/preview/11.gif?raw=true",
+        "width": 600,
+        "height": 337,
+        // 流式布局
+        "fluid": false
     });
+
 </script>
 </body>
 </html>
