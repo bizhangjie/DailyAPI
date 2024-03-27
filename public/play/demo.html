@@ -5,7 +5,7 @@
     <meta name=viewport
           content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,minimal-ui">
     <meta name="referrer" content="no-referrer">
-    <title>xgplayer</title>
+    <title>jinricp</title>
     <style type="text/css">
         html, body {
             width: 100%;
@@ -20,6 +20,16 @@
 <script src="//unpkg.byted-static.com/xgplayer/2.31.6/browser/index.js" charset="utf-8"></script>
 <script src="//unpkg.byted-static.com/xgplayer-hls.js/2.2.2/browser/index.js" charset="utf-8"></script>
 <script>
+
+    var url2 = new URL(location.href)
+    var Host = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF&字幕&m3u8/';
+    var proxy = 'https://api.buxiangyao.link/srttovtt?url=';
+    var poster = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF%26%E5%AD%97%E5%B9%95%26m3u8/' + url2.searchParams.get('subtitle').split('/')[0] + "/preview/6.gif?raw=true";
+    var urlValue = decodeURIComponent(Host + url2.searchParams.get('url') || '')
+    var subtitleValue = decodeURIComponent(proxy + url2.searchParams.get('subtitle') || '')
+    console.log(urlValue)
+    console.log(subtitleValue)
+
     let player = new HlsJsPlayer({
         "id": "mse",
         "playsinline": true,
@@ -28,12 +38,14 @@
         ],
         "nativeTextTrack": [
             {
-                "src": "https://api.buxiangyao.link/play/20240223_221612 (1).vtt",
-                "label": "字幕1",
+                // "src": "https://api.buxiangyao.link/play/20240223_221612 (1).vtt",
+                "src": subtitleValue,
+                "label": "字幕",
                 "default": true
             }
         ],
-        "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF&字幕&m3u8/2.23/20240223_221612.m3u8",
+        // "url": "https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF&字幕&m3u8/2.23/20240223_221612.m3u8",
+        "url": urlValue,
         "pip": true,
         "screenShot": true,
         // 最小播放器
@@ -96,9 +108,9 @@
             "panel": true
         },
         // 封面
-        "poster": "https://github.com/niucnet/jinricp/blob/main/GIF&%E5%AD%97%E5%B9%95&m3u8/2.23/preview/11.gif?raw=true",
-        "width": 600,
-        "height": 337,
+        "poster": poster,
+        "width": "100%",
+        "height": "100%",
         // 流式布局
         "fluid": false
     });
