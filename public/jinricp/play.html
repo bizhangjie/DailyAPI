@@ -24,7 +24,12 @@
     var url2 = new URL(location.href)
     var Host = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF&字幕&m3u8/';
     var proxy = 'https://api.buxiangyao.link/srttovtt?url=';
-    var poster = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF%26%E5%AD%97%E5%B9%95%26m3u8/' + url2.searchParams.get('subtitle').split('/')[0] + "/preview/6.gif?raw=true";
+    var poster = 'https://mirror.ghproxy.com/https://raw.githubusercontent.com/niucnet/jinricp/main/GIF%26%E5%AD%97%E5%B9%95%26m3u8/' + url2.searchParams.get('subtitle').split('/')[0];
+    if ( url2.searchParams.get('subtitle').split('/')[0] == '3.25'){
+        poster = poster + "/preview/pic_005.gif?raw=true";
+    }else {
+        poster = poster + "/preview/6.gif?raw=true";
+    }
     var urlValue = decodeURIComponent(Host + url2.searchParams.get('url') || '')
     var subtitleValue = decodeURIComponent(proxy + url2.searchParams.get('subtitle') || '')
     console.log(urlValue)
