@@ -7,7 +7,7 @@ const response = require('../../utils/response');
 // 缓存键名
 const cacheKey = "srtTovttData";
 
-const Host = 'https://github.com/niucnet/jinricp/raw/main/GIF&%E5%AD%97%E5%B9%95&m3u8/';
+const Host = 'https://api.buxiangyao.link/jinricp(M3U8)/';
 
 // 播放地址
 proxyRouter.get("/srttovtt", async (ctx) => {
