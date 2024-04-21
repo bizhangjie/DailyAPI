@@ -1,0 +1,14 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-MEDIA-SEQUENCE:0
+#EXT-X-ALLOW-CACHE:YES
+#EXT-X-TARGETDURATION:11
+#EXTINF:10.033667,
+https://bafybeieuvd64sd6572cfbu3rbidhifxz35wskfmla5ytidc4ebadzp44tu.ipfs.nftstorage.link/
+#EXTINF:10.000667,
+https://bafybeiekmzwvmqm66vpmqahowdofh4zywnra32hyisa4a2vrlb6af4n5ee.ipfs.nftstorage.link/
+#EXTINF:10.000667,
+https://bafybeibpme5syhsilusqauolbungf2xacztfyhqkfc6wovk52zjacntziu.ipfs.nftstorage.link/
+#EXTINF:6.066667,
+https://bafybeibxwrgtl25vpz5x33fj4hpes7p4fom5iu6eb5xzcimytrd66u7734.ipfs.nftstorage.link/
+#EXT-X-ENDLIST
