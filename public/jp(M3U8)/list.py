@@ -21,7 +21,8 @@ def get_m3u8_files(directory):
         if subpath.is_file():
             # 检查文件的扩展名是否为".m3u8"
             if subpath.suffix == '.m3u8':
-                print(f'<li><a href="https://api.buxiangyao.link/jinricp(M3U8)/{subpath}"target="_blank">{subpath}</a></li>')
+                print(subpath)
+                # print(f'<li><a href="https://api.buxiangyao.link/jp(M3U8)/{subpath}"target="_blank">{subpath}</a></li>')
         # 如果是子目录
         elif subpath.is_dir():
             # 递归调用 get_m3u8_files 函数来查找子目录中的 m3u8 文件
