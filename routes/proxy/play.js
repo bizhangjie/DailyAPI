@@ -17,7 +17,7 @@ proxyRouter.get("/kk", async (ctx) => {
         // 从缓存中获取数据
         let data = await get(key);
         if (!data) {
-            // 从服务器拉取数据
+            // 1从服务器拉取数据
             if (url.split("/")[2] !== "rou.video"){
                 const sourceHtml = await axios.get(url);
                 const source = cheerio.load(sourceHtml.data);
