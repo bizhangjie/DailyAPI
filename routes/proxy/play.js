@@ -18,20 +18,25 @@ proxyRouter.get("/kk", async (ctx) => {
         let data = await get(key);
         if (!data) {
             // 从服务器拉取数据
-            const sourceHtml = await axios.get(url);
-            const source = cheerio.load(sourceHtml.data);
-            const htmlContent = source.html().replace(/&amp;/g, "&").replace(/&quot;/g, '"');
-            let regex2 = /"video":{"url":"(.*?)"/g;
-            if (url.split("/")[2] === "hlj.fun") {
-                regex2 = /"url":"(.*?)"/g;
+            if (url.split("/")[2] !== "rou.video"){
+                const sourceHtml = await axios.get(url);
+                const source = cheerio.load(sourceHtml.data);
+                const htmlContent = source.html().replace(/&amp;/g, "&").replace(/&quot;/g, '"');
+                let regex2 = /"video":{"url":"(.*?)"/g;
+                if (url.split("/")[2] === "hlj.fun") {
+                    regex2 = /"url":"(.*?)"/g;
+                }
+                let urlList = [];
+                let match;
+                while ((match = regex2.exec(htmlContent)) !== null) {
+                    const url = match[1].replace(/\\\//g, '/');
+                    urlList.push(url);
+                }
+                data = urlList[pg - 1];
+            }else {
+                const play = await axios.get(url.replace("/v/","/api/v/"));
+                data = play.data.video.videoUrl;
             }
-            let urlList = [];
-            let match;
-            while ((match = regex2.exec(htmlContent)) !== null) {
-                const url = match[1].replace(/\\\//g, '/');
-                urlList.push(url);
-            }
-            data = urlList[pg - 1];
             // 将数据写入缓存
             await set(key, data);
         }
