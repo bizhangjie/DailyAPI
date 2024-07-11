@@ -2424,7 +2424,7 @@ var is_cdnimg = function (path) {
     if (path.indexOf("/upload/upload/") !== -1) {
         return true;
     }
-    if (path.indexOf("/upload_01/upload/") !== -1) {
+    if (path.indexOf("/upload_01/") !== -1) {
         return true;
     }
     return false;
